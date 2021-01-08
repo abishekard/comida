@@ -36,7 +36,7 @@ class PlaceOrderController extends Controller
               'total_price'=>$request->total_price,
               'order_id'=>$orderId,
               'partner_id'=>$request->partner_id,
-              'status'=>0
+              'status'=>'new'
           ]);
 
 

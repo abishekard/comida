@@ -35,6 +35,11 @@ Route::group(['prefix' => 'auth'], function () {
 
 });
 
+Route::get('customer/show/profile/{id}','Customer\CInfoController@showProfile');
+Route::post('customer/edit/profile','Customer\CInfoController@editProfile');
+Route::get('customer/show/address/{id}','Customer\CInfoController@showAddress');
+Route::post('customer/edit/address','Customer\CInfoController@editAddress');
+
 
 // partner
 
@@ -44,3 +49,7 @@ Route::post('/partnerShop', 'Partner\PartnerController@getPartnerShop');
 Route::post('partner/login', 'Partner\loginController@login');
 Route::get('partner/showPartner/{id}', 'Partner\PInfoController@showPartner');
 Route::post('partner/editPartner', 'Partner\PInfoController@editPartner');
+Route::get('partner/order/new/{id}', 'Partner\POrderController@newOrder');
+Route::get('partner/order/cancelled/{id}', 'Partner\POrderController@cancelledOrder');
+Route::get('partner/order/completed/{id}', 'Partner\POrderController@completedOrder');
+Route::get('partner/order/detail/{id}', 'Partner\POrderController@orderDetail');
