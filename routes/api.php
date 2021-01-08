@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/createCustomer', 'Customer\CreateCustomer@create');
 Route::post('/storeAddress','Customer\AddressController@storeAddress');
-Route::post('/createProduct','Partner\productController@createProduct');
+
 Route::post('/placeOrder', 'Customer\PlaceOrderController@PlaceOrder');
 Route::post('/myOrders/{id}', 'Customer\PlaceOrderController@getOrders');
 Route::post('/myOrderDetail/{orderId}', 'Customer\PlaceOrderController@getOrderDetails');
@@ -42,6 +42,10 @@ Route::post('customer/edit/address','Customer\CInfoController@editAddress');
 
 
 // partner
+
+Route::post('/createProduct','Partner\productController@createProduct');
+Route::post('partner/edit/product','Partner\productController@editProduct');
+Route::post('partner/delete/product/{id}','Partner\productController@deleteProduct');
 
 Route::post('/createPartner', 'Partner\PartnerController@createPartner');
 Route::post('/partnerAddress', 'Partner\PartnerController@getPartnerAddress');
