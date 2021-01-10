@@ -40,6 +40,8 @@ Route::post('customer/edit/profile','Customer\CInfoController@editProfile');
 Route::get('customer/show/address/{id}','Customer\CInfoController@showAddress');
 Route::post('customer/edit/address','Customer\CInfoController@editAddress');
 
+Route::post('customer/send/email','Customer\CEmailController@emailOtpVerify');
+
 
 // partner
 
