@@ -20,7 +20,8 @@ class productController extends Controller
                  'veg_non_veg'=>'required',
                  'type'=>'required',
                  'price_type'=>'required',
-                 'discount'=>'required'
+                 'discount'=>'required',
+                 'partner_id'=>'required'
            ]);
            if($validate->fails())
            {
@@ -36,7 +37,7 @@ class productController extends Controller
            $last_img = $uplocation.$img_name;
 
            DB::table('product_table')->insert([
-                 'partner_id'=>1,
+                 'partner_id'=>$request->partner_id,
                  'item_name'=>$request->item_name,
                  'item_image'=>$last_img,
                  'price'=>$request->item_price,

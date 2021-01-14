@@ -23,7 +23,11 @@ class AddressController extends Controller
                 'state'=>'required',
                 'city'=>'required',
                 'landmark'=>'required',
-                'pincode'=>'required|max:6|min:6'
+                'locality'=>'required',
+                'latitude'=>'required',
+                'longitude'=>'required',
+                'pincode'=>'required|max:6|min:6',
+                'address_type'=>'required'
           ]);
           if($validate->fails())
           {
@@ -35,6 +39,10 @@ class AddressController extends Controller
               'city'=>$request->city,
               'landmark'=>$request->landmark,
               'pincode'=>$request->pincode,
+              'locality'=>$request->locality,
+              'latitude'=>$request->latitude,
+              'longitude'=>$request->longitude,
+              'address_type'=>$request->address_type,
               'user_id'=>Auth::user()->id,
               'created_at'=>Carbon::now()
           ]);

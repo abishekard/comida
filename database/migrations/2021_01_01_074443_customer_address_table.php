@@ -21,6 +21,10 @@ class CustomerAddressTable extends Migration
             $table->string('city');
             $table->string('pincode');
             $table->string('landmark');
+            $table->string('locality');
+            $table->string('latitude');
+            $table->string('longitude');
+            $table->string('address_type');
             $table->timestamps();
         });
     }
