@@ -34,8 +34,8 @@ class productController extends Controller
         $item_img = $request->file('item_image');
         $img_ext = strtolower($item_img->getClientOriginalExtension());
         $img_name = $name_gen . '.' . $img_ext;
-        $uplocation = 'images/product_image/';
-        //  $uplocation = 'public/images/product_image/';
+      //  $uplocation = 'images/product_image/';
+          $uplocation = 'public/images/product_image/';
         $upl = '/images/product_image/';
         $last_img = env('APP_URL') . $upl . $img_name;
 

@@ -42,11 +42,12 @@ Route::post('customer/edit/address','Customer\CInfoController@editAddress');
 Route::post('customer/delete/address/{id}','Customer\CInfoController@deleteAddress');
 
 Route::post('customer/send/email','Customer\CEmailController@emailOtpVerify');
+Route::post('customer/product/all','Customer\HomePageController@getAllProductList');
 
 
 // partner
 
-Route::post('/createProduct','Partner\productController@createProduct');
+Route::post('partner/create/product','Partner\productController@createProduct');
 Route::post('partner/edit/product','Partner\productController@editProduct');
 Route::post('partner/delete/product/{id}','Partner\productController@deleteProduct');
 
