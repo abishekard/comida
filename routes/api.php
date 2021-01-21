@@ -17,12 +17,17 @@ use Illuminate\Support\Facades\Route;
 // customer
 
 
-Route::post('/createCustomer', 'Customer\CreateCustomer@create');
+//Route::post('/createCustomer', 'Customer\CreateCustomer@create');
 Route::post('/storeAddress','Customer\AddressController@storeAddress');
 
-Route::post('/placeOrder', 'Customer\PlaceOrderController@PlaceOrder');
-Route::post('/myOrders/{id}', 'Customer\PlaceOrderController@getOrders');
-Route::post('/myOrderDetail/{orderId}', 'Customer\PlaceOrderController@getOrderDetails');
+Route::post('/customer/placeOrder', 'Customer\PlaceOrderController@PlaceOrder');
+Route::post('/customer/myOrders/{id}', 'Customer\PlaceOrderController@getOrders');
+Route::post('/customer/myOrderDetail/{orderId}', 'Customer\PlaceOrderController@getOrderDetails');
+
+Route::post('/customer/login/send/otp', 'Customer\CLoginController@CheckAndsendOtpToEmail');
+Route::post('/customer/login/with/otp', 'AuthController@login');
+Route::post('/customer/create/new', 'Customer\CLoginController@createNewUser');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

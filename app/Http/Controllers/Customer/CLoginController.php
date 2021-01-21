@@ -1,49 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
 
-class AuthController extends Controller
-
+class CLoginController extends Controller
 {
-    /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login']]);
-    }
 
-    /**
-     * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function login()
-    {
-        $validate = Validator::make(request(['email', 'password']), [
-            'email' => 'required',
-            'password' => 'required'
-        ]);
-        if ($validate->fails()) {
-            return response()->json($validate->errors());
-        }
-        $credentials = request(['email', 'password']);
-
-        if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-
-        return $this->respondWithToken($token);
-    }
 
 
     public function loginWithOtp(Request $request)
@@ -79,7 +47,7 @@ class AuthController extends Controller
 
 
 
-    public function sendOtpToEmail(Request $request)
+    public function CheckAndsendOtpToEmail(Request $request)
     {
         $validate = Validator::make($request->all(), [
             'email' => 'required',
@@ -99,7 +67,7 @@ class AuthController extends Controller
             //    ]);
             //    return 'otp sent';
 
-           $this->emailOtpVerify($request);
+           $this->sendOtpEmail($request);
 
         } else {
 
@@ -114,7 +82,7 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|unique:users',
             'mobile' => 'required|max:10|unique:users',
-            'password' => 'required'
+        //    'password' => 'required'
         ]);
         if ($validate->fails()) {
             return response()->json($validate->errors());
@@ -124,14 +92,14 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'mobile' => $request->mobile,
-            'password' => Hash::make($request->password)
+         //   'password' => Hash::make($request->password)
         ]);
 
         $this->sendOtpToEmail($request);
         return response()->json(['status' => 200, 'message' => 'customer created and otp sent']);
     }
 
-    public function emailOtpVerify(Request $request)
+    public function sendOtpEmail(Request $request)
     {
         $email = new \SendGrid\Mail\Mail();
         $email->setFrom("abishek@androasu.in", "Comida");
@@ -142,7 +110,7 @@ class AuthController extends Controller
         $otp= rand(pow(10, $digits - 1), pow(10, $digits) - 1);
         $email->addContent(
             "text/html",
-            "<strong>1234 is your $otp for verfication at Comida</strong>"
+            "<strong>$otp is your otp for verfication at Comida</strong>"
         );
         $sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
         try {
@@ -150,8 +118,10 @@ class AuthController extends Controller
              print $response->statusCode() . "\n";
              print_r($response->headers());
              print $response->body() . "\n";
+             print getenv('SENDGRID_API_KEY').'apple';
 
-            DB::table('users')->where('email',$request->email)->update(['otp'=>$otp]);
+            DB::table('users')->where('email',$request->email)->
+            update(['password'=>Hash::make($otp)]);
             return response()->json([
                 'status' => 200,
                 'message' => $response->statusCode() . " mail sent"
@@ -160,54 +130,5 @@ class AuthController extends Controller
             echo 'Caught exception: ' . $e->getMessage() . "\n";
         }
     }
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function me()
-    {
-        return response()->json(auth()->user());
-    }
 
-    /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function logout()
-    {
-        auth()->logout();
-
-        return response()->json(['message' => 'Successfully logged out']);
-    }
-
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function refresh()
-    {
-        return $this->respondWithToken(auth()->refresh());
-    }
-
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function respondWithToken($token)
-    {
-        $data = DB::table('users')->where('id', Auth::user()->id)
-            ->select(['name', 'email', 'mobile', 'fcm'])->get();
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'data' => response()->json($data)->original[0]
-
-        ]);
-    }
 }

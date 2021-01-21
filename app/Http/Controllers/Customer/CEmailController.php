@@ -13,7 +13,7 @@ class CEmailController extends Controller
         $email = new \SendGrid\Mail\Mail();
         $email->setFrom("abishek@androasu.in", "Comida");
         $email->setSubject("Comida otp for Email verification");
-        $email->addTo("chiranjeebnayak.37@gmail.com", "Customer Name");
+        $email->addTo("abishek.ard@gmail.com", "Customer Name");
         //  $email->addContent("text/plain", "and easy to do anywhere, even with PHP");
         $email->addContent(
             "text/html",
