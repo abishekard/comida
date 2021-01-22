@@ -46,7 +46,7 @@ class productController extends Controller
             'item_image' => $last_img,
             'price' => $request->item_price,
             'veg_non_veg' => $request->veg_non_veg,
-            'type' => $request->type,
+            'category' => $request->category,
             'discount' => $request->discount,
             'price_type' => $request->price_type,
             'created_at' => Carbon::now()

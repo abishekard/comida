@@ -22,7 +22,7 @@ class ProductTableMigration extends Migration
             $table->string('price_type');
             $table->string('discount');
             $table->string('veg_non_veg');
-            $table->string('type');
+            $table->string('category');
             $table->timestamps();
         });
     }

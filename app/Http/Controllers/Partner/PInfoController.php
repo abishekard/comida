@@ -69,12 +69,16 @@ class PInfoController extends Controller
 
            // return response()->json([$old_img]);
             if($old_img[0]->shop_image != null)
-            unlink($old_img[0]->shop_image);
+            //server
+            unlink('public/'.$old_img[0]->shop_image);
+            //local
+          //  unlink($old_img[0]->shop_image);
 
             $new_img = $request->file('shop_image');
             $img_name = hexdec(uniqid()).'.'.'jpg';
             $up_location = 'images/shop_images/';
-            $new_img->move($up_location,$img_name);
+            $upl = 'public/images/shop_images/';
+            $new_img->move($upl,$img_name);
 
 
 

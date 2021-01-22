@@ -48,6 +48,7 @@ Route::post('customer/delete/address/{id}','Customer\CInfoController@deleteAddre
 
 Route::post('customer/send/email','Customer\CEmailController@emailOtpVerify');
 Route::post('customer/product/all','Customer\HomePageController@getAllProductList');
+Route::post('customer/product/category/all/{partner_id}','Customer\HomePageController@getAllProductCategory');
 
 
 // partner

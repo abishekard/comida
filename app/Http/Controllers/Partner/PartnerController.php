@@ -79,6 +79,7 @@ class PartnerController extends Controller
     {
           $validate = Validator::make($request->all(),[
               'shop_name'=>'required',
+              'speciality'=>'required',
               'open_time'=>'required',
               'close_time'=>'required',
               'shop_image'=>'required|mimes:png,jpg',
@@ -102,6 +103,7 @@ class PartnerController extends Controller
 
           DB::table('partner')->where('id',$request->id)->update([
               'shop_name'=>$request->shop_name,
+              'speciality'=>$request->speciality,
               'open_time'=>$request->open_time,
               'close_time'=>$request->close_time,
               'shop_image'=>$last_img

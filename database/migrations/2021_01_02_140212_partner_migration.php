@@ -21,6 +21,7 @@ class PartnerMigration extends Migration
             $table->string('mobile');
             $table->string('password');
             $table->string('shop_name')->nullable();
+            $table->string('speciality')->nullable();
             $table->string('shop_image')->nullable();
             $table->string('address')->nullable();
             $table->string('state')->nullable();
