@@ -37,7 +37,7 @@ class productController extends Controller
       //  $uplocation = 'images/product_image/';
           $uplocation = 'public/images/product_image/';
         $upl = '/images/product_image/';
-        $last_img = env('APP_URL') . $upl . $img_name;
+        $last_img =$upl . $img_name;
 
 
         DB::table('product_table')->insert([
