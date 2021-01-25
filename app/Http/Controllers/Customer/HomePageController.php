@@ -56,4 +56,15 @@ class HomePageController extends Controller
             'data' => $fData
             ]);
     }
+
+    public function getAllRestaurent()
+    {
+        $data = DB::table('partner')->select(['id',
+            'shop_name','speciality','shop_image','address','lat','long',
+            'close_time','open_time','available','rating'
+        ])->get();
+
+        return response()->json(['status'=>200,'data'=>$data]);
+    }
+
 }
