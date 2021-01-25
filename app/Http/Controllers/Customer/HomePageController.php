@@ -40,7 +40,8 @@ class HomePageController extends Controller
         $categories = DB::table('product_table')->where('partner_id', $partner_id)->pluck('category')->unique();
         $partnerData = DB::table('partner')->where('id', $partner_id)->get();
         foreach ($categories as $category) {
-            $childData = DB::table('product_table')->where('category', $category)->get();
+            $childData = DB::table('product_table')->where('category', $category)
+            ->where('partner_id',$partner_id)->get();
             array_push($fData, ['category_name' => $category, 'category_data' => $childData]);
         }
        // return response()->json(['data'=>$partnerData]);
