@@ -18,7 +18,7 @@ class productController extends Controller
             'item_image' => 'required|mimes:png,jpg',
             'item_price' => 'required',
             'veg_non_veg' => 'required',
-            'type' => 'required',
+            'category' => 'required',
             'price_type' => 'required',
             'discount' => 'required',
             'partner_id' => 'required'
@@ -91,9 +91,9 @@ class productController extends Controller
             DB::table('product_table')->where('id', $request->id)
                 ->update(['veg_non_veg' => $request->veg_non_veg]);
         }
-        if ($request->type) {
+        if ($request->category) {
             DB::table('product_table')->where('id', $request->id)
-                ->update(['type' => $request->type]);
+                ->update(['category' => $request->category]);
         }
         if ($request->item_image) {
             $validate = Validator::make($request->all(), [
