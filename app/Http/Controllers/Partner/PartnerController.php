@@ -98,8 +98,9 @@ class PartnerController extends Controller
           $img_ext = strtolower($shop_img->getClientOriginalExtension());
           $img_name = $name_gen.'.'.$img_ext;
           $uplocation = 'images/shop_images/';
+          $upl = 'public/images/shop_images/';
           $last_img = $uplocation.$img_name;
-          $shop_img->move($uplocation,$img_name);
+          $shop_img->move($upl,$img_name);
 
           DB::table('partner')->where('id',$request->id)->update([
               'shop_name'=>$request->shop_name,
