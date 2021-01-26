@@ -67,14 +67,15 @@ class CLoginController extends Controller
             //    ]);
             //    return 'otp sent';
 
-           $this->sendOtpEmail($request);
+           $data=$this->sendOtpEmail($request);
+           return $data;
 
         } else {
 
            // $this->createNewUser($request);
             return response()->json([
                 'status'=>202,
-                'data'=>'email does not exist'
+                'message'=>'email does not exist'
             ]);
         }
     }
