@@ -50,6 +50,7 @@ Route::post('customer/send/email','Customer\CEmailController@emailOtpVerify');
 Route::post('customer/product/all','Customer\HomePageController@getAllProductList');
 Route::post('customer/product/category/all/{partner_id}','Customer\HomePageController@getAllProductCategory');
 Route::post('customer/restaurent/all','Customer\HomePageController@getAllRestaurent');
+Route::post('customer/partner/info/{id}','Customer\HomePageController@getPartnerInfo');
 
 
 // partner

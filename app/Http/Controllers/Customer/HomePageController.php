@@ -68,4 +68,15 @@ class HomePageController extends Controller
         return response()->json(['status'=>200,'data'=>$data]);
     }
 
+    public function getPartnerInfo($id)
+    {
+        $data = DB::table('partner')->where('id',$id)->
+        select(['shop_name','address','shop_image','speciality'])->get();
+
+        return response()->json([
+            'status'=>200,
+            'data'=>$data[0]
+        ]);
+    }
+
 }
