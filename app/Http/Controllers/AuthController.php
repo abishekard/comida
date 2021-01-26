@@ -202,7 +202,7 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         $data = DB::table('users')->where('id', Auth::user()->id)
-            ->select(['name', 'email', 'mobile', 'fcm'])->get();
+            ->select(['id','name', 'email', 'mobile', 'fcm'])->get();
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
