@@ -72,7 +72,10 @@ class CLoginController extends Controller
         } else {
 
            // $this->createNewUser($request);
-            return 'email number not exist';
+            return response()->json([
+                'status'=>202,
+                'data'=>'email does not exist'
+            ]);
         }
     }
 
@@ -115,10 +118,10 @@ class CLoginController extends Controller
         $sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
         try {
             $response = $sendgrid->send($email);
-             print $response->statusCode() . "\n";
-             print_r($response->headers());
-             print $response->body() . "\n";
-             print getenv('SENDGRID_API_KEY').'apple';
+            //  print $response->statusCode() . "\n";
+            //  print_r($response->headers());
+            //  print $response->body() . "\n";
+            //  print getenv('SENDGRID_API_KEY').'apple';
 
             DB::table('users')->where('email',$request->email)->
             update(['password'=>Hash::make($otp)]);
