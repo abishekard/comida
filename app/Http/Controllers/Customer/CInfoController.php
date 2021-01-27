@@ -83,7 +83,7 @@ class CInfoController extends Controller
     {
         $data = DB::table('customeraddresstable')->where('user_id', $id)
             ->select('id', 'address', 'state', 'city', 'pincode',
-             'landmark','locality','latitude','longitude')->get();
+             'landmark','locality','latitude','longitude','address_type')->get();
 
         return response()->json([
             'status' => 200,
