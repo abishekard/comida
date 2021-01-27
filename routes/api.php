@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 
 //Route::post('/createCustomer', 'Customer\CreateCustomer@create');
-Route::post('/storeAddress','Customer\AddressController@storeAddress');
+Route::post('/customer/create/address','Customer\AddressController@storeAddress');
 
 Route::post('/customer/placeOrder', 'Customer\PlaceOrderController@PlaceOrder');
 Route::post('/customer/myOrders/{id}', 'Customer\PlaceOrderController@getOrders');
