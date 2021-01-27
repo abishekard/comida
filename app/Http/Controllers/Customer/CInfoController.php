@@ -73,7 +73,7 @@ class CInfoController extends Controller
 
         return response()->json([
             'status' => 200,
-            'data' => $upl
+            'data' => $upl.$img_name
         ]);
     }
 
