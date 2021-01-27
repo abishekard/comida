@@ -89,7 +89,7 @@ class CLoginController extends Controller
         //    'password' => 'required'
         ]);
         if ($validate->fails()) {
-            return response()->json($validate->errors());
+            return response()->json(['status'=>300,'data'=>$validate->errors()]);
         }
 
         DB::table('users')->insert([
@@ -99,7 +99,7 @@ class CLoginController extends Controller
          //   'password' => Hash::make($request->password)
         ]);
 
-        $this->sendOtpToEmail($request);
+        $this->sendOtpEmail($request);
         return response()->json(['status' => 200, 'message' => 'customer created and otp sent']);
     }
 

@@ -60,14 +60,15 @@ class CInfoController extends Controller
 
             $new_img = $request->file('profile_image');
             $img_name = hexdec(uniqid()) . '.' . 'jpg';
-            $up_location = 'images/customer_profile_image/';
+            $up_location = 'public/images/customer_profile_image/';
+            $upl = 'images/customer_profile_image/';
             $new_img->move($up_location, $img_name);
 
 
 
 
             DB::table('users')->where('id', $request->id)
-                ->update(['profile_image' => $up_location . $img_name]);
+                ->update(['profile_image' => $upl . $img_name]);
         }
 
         return response()->json([
