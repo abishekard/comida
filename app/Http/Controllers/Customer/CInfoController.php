@@ -56,7 +56,7 @@ class CInfoController extends Controller
 
             // return response()->json([$old_img]);
             if ($old_img[0]->profile_image != null)
-                unlink($old_img[0]->profile_image);
+                unlink('public/'.$old_img[0]->profile_image);
 
             $new_img = $request->file('profile_image');
             $img_name = hexdec(uniqid()) . '.' . 'jpg';

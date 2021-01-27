@@ -112,9 +112,9 @@ class productController extends Controller
 
             $new_img = $request->file('item_image');
             $img_name = hexdec(uniqid()) . '.' . 'jpg';
-            $up_location = 'images/product_image/';
+            //$up_location = 'images/product_image/';
 
-            //  $up_location = 'public/images/product_image/';
+            $up_location = 'public/images/product_image/';
             $upl = '/images/product_image/';
             $last_img = env('APP_URL') . $upl . $img_name;
 
