@@ -56,7 +56,7 @@ class CInfoController extends Controller
 
             // return response()->json([$old_img]);
             if ($old_img[0]->profile_image != null)
-                unlink('public/'.$old_img[0]->profile_image);
+                unlink('public/' . $old_img[0]->profile_image);
 
             $new_img = $request->file('profile_image');
             $img_name = hexdec(uniqid()) . '.' . 'jpg';
@@ -73,7 +73,7 @@ class CInfoController extends Controller
 
         return response()->json([
             'status' => 200,
-            'data' => $upl.$img_name
+            'data' => $upl . $img_name
         ]);
     }
 
@@ -82,8 +82,18 @@ class CInfoController extends Controller
     public function showAddress($id)
     {
         $data = DB::table('customeraddresstable')->where('user_id', $id)
-            ->select('id', 'address', 'state', 'city', 'pincode',
-             'landmark','locality','latitude','longitude','address_type')->get();
+            ->select(
+                'id',
+                'address',
+                'state',
+                'city',
+                'pincode',
+                'landmark',
+                'locality',
+                'latitude',
+                'longitude',
+                'address_type'
+            )->get();
 
         return response()->json([
             'status' => 200,
@@ -131,15 +141,37 @@ class CInfoController extends Controller
 
     public function deleteAddress($id)
     {
-        $isDeleted=DB::table('customeraddresstable')->where('id',$id)->delete();
-        if($isDeleted)
-        {
+        $isDeleted = DB::table('customeraddresstable')->where('id', $id)->delete();
+        if ($isDeleted) {
             return response()->json([
                 'status' => 200,
                 'message' => 'deleted'
             ]);
         }
+    }
+
+    public function storeFcmToken(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'id' => 'required',
+            'fcm' => 'required'
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => 300,
+                'message' => $validate->errors()
+            ]);
+        }
+
+        $data = DB::table('users')->where('id', $request->id)->update([
+            'fcm' => $request->fcm
+        ]);
 
 
+            return response()->json([
+                'status' => 300,
+                'message' => 'successful'
+            ]);
     }
 }

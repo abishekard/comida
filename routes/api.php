@@ -27,6 +27,7 @@ Route::post('/customer/myOrderDetail/{orderId}', 'Customer\PlaceOrderController@
 Route::post('/customer/login/send/otp', 'Customer\CLoginController@CheckAndsendOtpToEmail');
 Route::post('/customer/login/with/otp', 'AuthController@login');
 Route::post('/customer/create/new', 'Customer\CLoginController@createNewUser');
+Route::post('/customer/send/notification', 'Customer\CNotificationController@sendNotification');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -51,6 +52,7 @@ Route::post('customer/product/all','Customer\HomePageController@getAllProductLis
 Route::post('customer/product/category/all/{partner_id}','Customer\HomePageController@getAllProductCategory');
 Route::post('customer/restaurent/all','Customer\HomePageController@getAllRestaurent');
 Route::post('customer/partner/info/{id}','Customer\HomePageController@getPartnerInfo');
+Route::post('customer/store/fcm','Customer\CInfoController@storeFcmToken');
 
 
 // partner
