@@ -28,7 +28,7 @@ class PlaceOrderController extends Controller
         $quantity = explode(',', $request->quantity);
 
         //    return response()->json(['pid'=>$pIdArray,'qty'=>$quantity]);
-        $orderId = hexdec(uniqid());
+        $orderId = round(hexdec(uniqid())/100);
 
         $addressData = DB::table('customeraddresstable')->where('id', $request->address_id)->get();
 
@@ -48,7 +48,7 @@ class PlaceOrderController extends Controller
             'address_type' => $addressData[0]->address_type,
             'delivered_address' => $addressData[0]->address,
             'lat_lng' => $addressData[0]->latitude . " " . $addressData[0]->longitude,
-            'status' => 0
+            'status' => 1
         ]);
 
 

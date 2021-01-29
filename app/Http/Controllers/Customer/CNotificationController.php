@@ -13,7 +13,7 @@ class CNotificationController extends Controller
     {
        // $firebaseToken = User::whereNotNull('device_token')->pluck('device_token')->all();
 
-       $firebaseToken=['egaY5KUITzuNrvdSLDThrz:APA91bHiNhZrqdmK2QNY4QJqo9oX5WQQytfth1qFRDZXJQtSexjkl8Rk9Ow8Ubc3lwt1Ty2Xr2uTTBO4-L2xspLTYIRnpwy7uNJaWcLOm3YkJ8J9yVlpQrDFBvyLUZJCvwEubGVXi_y4'];
+       $firebaseToken=['dkXMg4SWQUSN-5ooqNqzlJ:APA91bGPf7mDIa5BDnEUOAxO90Wu3-Vaxp75q2JdjSEslKOT7K1HnrBThTo1nErF7pn1OBaH7AwyanqjXu1GRUjfT87K5z6A_c970aQzF0n1MsD4C5B1CWKR_xI55eXkdzq350oLzUDr'];
         $SERVER_API_KEY = 'AAAApuyCRGc:APA91bG-LcvN10PhgxV2CueE5BeI13x44IJBM_tLfGmuDlER3JV7H-gutccVv8Rh6NNJ2MD7plMlWbSmv-Ebs0rhssbqmyFH2DH94Cj-0UBFy-o90YejKubFc6SPlASXpIYjY0BilOzV';
 
         $data = [
