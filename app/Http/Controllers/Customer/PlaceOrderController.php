@@ -32,7 +32,7 @@ class PlaceOrderController extends Controller
 
         $addressData = DB::table('customeraddresstable')->where('id', $request->address_id)->get();
 
-      //  return response()->json($addressData);
+        return response()->json($addressData);
 
 
 
