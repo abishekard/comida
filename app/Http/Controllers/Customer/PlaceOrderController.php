@@ -28,11 +28,11 @@ class PlaceOrderController extends Controller
         $quantity = explode(',', $request->quantity);
 
         //    return response()->json(['pid'=>$pIdArray,'qty'=>$quantity]);
-        $orderId = round(hexdec(uniqid())/100);
+        $orderId = round(hexdec(uniqid()) / 100);
 
         $addressData = DB::table('customeraddresstable')->where('id', $request->address_id)->get();
 
-      //  return response()->json($addressData);
+        //  return response()->json($addressData);
 
 
 
@@ -75,42 +75,77 @@ class PlaceOrderController extends Controller
         return response()->json(['status' => 200, 'orderId' => $orderId]);
     }
 
-    public function getOrders($id)
+    public function getNewOrders($id)
     {
-        $data = DB::table('customer_order_table')->where('user_id', $id)
-            ->select('order_id', 'customer_address_id', 'status', 'created_at', 'total_price', 'partner_id')
+        $data = DB::table('customer_order_table')->where('user_id', $id)->whereIn('status', [1, 2, 3])
+            ->select('order_id', 'delivered_address', 'customer_address_id', 'status', 'created_at', 'total_price', 'partner_id')
             ->get();
 
-        //  $orderData = DB::table('customer_order_item')->where('order_id',$data[0]->order_id ->get();
-        return response()->json($data);
+        $temp = json_decode($data);
+        for ($i = 0; $i < sizeof($temp); $i++) {
+            $dataItem = DB::table('customer_order_item')->where('order_id', $temp[$i]->order_id)->select('item_image')->first();
+            $temp[$i]->image = $dataItem->item_image;
+        }
+
+        return response()->json([
+            'status' => 200,
+            'data' => $temp
+        ]);
+    }
+
+    public function getCompletedOrders($id)
+    {
+        $data = DB::table('customer_order_table')->where('user_id', $id)->where('status', 4)
+            ->select('order_id', 'delivered_address', 'customer_address_id', 'status', 'created_at', 'total_price', 'partner_id')
+            ->get();
+        $temp = json_decode($data);
+        for ($i = 0; $i < sizeof($temp); $i++) {
+            $dataItem = DB::table('customer_order_item')->where('order_id', $temp[$i]->order_id)->select('item_image')->first();
+            $temp[$i]->image = $dataItem->item_image;
+        }
+
+
+        return response()->json([
+            'status' => 200,
+
+            'data' => $temp
+        ]);
     }
 
     public function getOrderDetails($orderId)
     {
-        $mainData=DB::table('customer_order_table')->where('order_id',$orderId)->select(
-            'partner_id','total_price','status','address_type','delivered_address','order_id'
+        $mainData = DB::table('customer_order_table')->where('order_id', $orderId)->select(
+            'partner_id',
+            'total_price',
+            'status',
+            'address_type',
+            'delivered_address',
+            'order_id'
         )->get();
-        $partnerData=DB::table('partner')->where('id',$mainData[0]->partner_id)->select(
-            'shop_name','shop_image','speciality','address'
+        $partnerData = DB::table('partner')->where('id', $mainData[0]->partner_id)->select(
+            'shop_name',
+            'shop_image',
+            'speciality',
+            'address'
         )->get();
 
         $data = DB::table('customer_order_item')->where('order_id', $orderId)
             ->select('discount', 'quantity', 'price', 'created_at', 'item_name', 'item_image', 'price_type')->get();
 
-           // return response()->json($partnerData);
+        // return response()->json($partnerData);
 
         return response()->json([
-            'status'=>200,
-            'partner_id'=>$mainData[0]->partner_id,
-            'status'=>$mainData[0]->status,
-            'address_type'=>$mainData[0]->address_type,
-            'delivered_address'=>$mainData[0]->delivered_address,
-            'order_id'=>$mainData[0]->order_id,
-            'shop_name'=>$partnerData[0]->shop_name,
-            'shop_image'=>$partnerData[0]->shop_image,
-            'speciality'=>$partnerData[0]->speciality,
-            'shop_address'=>$partnerData[0]->address,
-            'orders'=>$data
-            ]);
+            'status' => 200,
+            'partner_id' => $mainData[0]->partner_id,
+            'status' => $mainData[0]->status,
+            'address_type' => $mainData[0]->address_type,
+            'delivered_address' => $mainData[0]->delivered_address,
+            'order_id' => $mainData[0]->order_id,
+            'shop_name' => $partnerData[0]->shop_name,
+            'shop_image' => $partnerData[0]->shop_image,
+            'speciality' => $partnerData[0]->speciality,
+            'shop_address' => $partnerData[0]->address,
+            'orders' => $data
+        ]);
     }
 }

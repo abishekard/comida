@@ -21,7 +21,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('/customer/create/address','Customer\AddressController@storeAddress');
 
 Route::post('/customer/placeOrder', 'Customer\PlaceOrderController@PlaceOrder');
-Route::post('/customer/orders/{id}', 'Customer\PlaceOrderController@getOrders');
+Route::post('/customer/orders/new/{id}', 'Customer\PlaceOrderController@getNewOrders');
+Route::post('/customer/orders/completed/{id}', 'Customer\PlaceOrderController@getCompletedOrders');
 Route::post('/customer/order/detail/{orderId}', 'Customer\PlaceOrderController@getOrderDetails');
 
 Route::post('/customer/login/send/otp', 'Customer\CLoginController@CheckAndsendOtpToEmail');
