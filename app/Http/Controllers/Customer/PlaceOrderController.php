@@ -87,9 +87,30 @@ class PlaceOrderController extends Controller
 
     public function getOrderDetails($orderId)
     {
+        $mainData=DB::table('customer_order_table')->where('order_id',$orderId)->select(
+            'partner_id','total_price','status','address_type','delivered_address','order_id'
+        )->get();
+        $partnerData=DB::table('partner')->where('id',$mainData[0]->partner_id)->select(
+            'shop_name','shop_image','speciality','address'
+        )->get();
+
         $data = DB::table('customer_order_item')->where('order_id', $orderId)
             ->select('discount', 'quantity', 'price', 'created_at', 'item_name', 'item_image', 'price_type')->get();
 
-        return response()->json($data);
+           // return response()->json($partnerData);
+
+        return response()->json([
+            'status'=>200,
+            'partner_id'=>$mainData[0]->partner_id,
+            'status'=>$mainData[0]->status,
+            'address_type'=>$mainData[0]->address_type,
+            'delivered_address'=>$mainData[0]->delivered_address,
+            'order_id'=>$mainData[0]->order_id,
+            'shop_name'=>$partnerData[0]->shop_name,
+            'shop_image'=>$partnerData[0]->shop_image,
+            'speciality'=>$partnerData[0]->speciality,
+            'shop_address'=>$partnerData[0]->address,
+            'orders'=>$data
+            ]);
     }
 }
