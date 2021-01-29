@@ -45,9 +45,9 @@ class PlaceOrderController extends Controller
             'total_price' => $request->total_price,
             'order_id' => $orderId,
             'partner_id' => $request->partner_id,
-            'address_type' => $addressData[0]->address_type,
-            'delivered_address' => $addressData[0]->address,
-            'lat_lng' => $addressData[0]->latitude . " " . $addressData[0]->longitude,
+            'address_type' => $addressData->address_type,
+            'delivered_address' => $addressData->address,
+            'lat_lng' => $addressData->latitude . " " . $addressData->longitude,
             'status' => 1
         ]);
 
