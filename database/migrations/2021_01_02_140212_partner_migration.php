@@ -33,6 +33,10 @@ class PartnerMigration extends Migration
             $table->time('close_time')->nullable();
             $table->string('available')->nullable();
             $table->string('rating')->nullable();
+            $table->string('gst_number')->nullable();
+            $table->string('aadhar_number')->nullable();
+            $table->string('aadhar_front')->nullable();
+            $table->string('aadhar_back')->nullable();
             $table->timestamps();
         });
     }

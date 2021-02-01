@@ -58,16 +58,21 @@ Route::post('customer/store/fcm','Customer\CInfoController@storeFcmToken');
 
 // partner
 
+
+Route::post('/partner/login/send/otp', 'Partner\PartnerController@CheckAndsendOtpToEmail');
+Route::post('/partner/login/with/otp', 'Partner\loginController@login');
+Route::post('/partner/create/new', 'Partner\PartnerController@createNewUser');
+
 Route::post('partner/create/product','Partner\productController@createProduct');
 Route::post('partner/edit/product','Partner\productController@editProduct');
 Route::post('partner/delete/product/{id}','Partner\productController@deleteProduct');
 
-Route::post('/createPartner', 'Partner\PartnerController@createPartner');
-Route::post('/partnerAddress', 'Partner\PartnerController@getPartnerAddress');
-Route::post('/partnerShop', 'Partner\PartnerController@getPartnerShop');
-Route::post('partner/login', 'Partner\loginController@login');
-Route::get('partner/showPartner/{id}', 'Partner\PInfoController@showPartner');
-Route::post('partner/editPartner', 'Partner\PInfoController@editPartner');
+//Route::post('partner/create', 'Partner\PartnerController@createPartner');
+Route::post('partner/get/address', 'Partner\PartnerController@getPartnerAddress');
+Route::post('/partner/get/shop', 'Partner\PartnerController@getPartnerShop');
+//Route::post('partner/login', 'Partner\loginController@login');
+Route::get('partner/profile/show/{id}', 'Partner\PInfoController@showPartner');
+Route::post('partner/profile/edit', 'Partner\PInfoController@editPartner');
 Route::get('partner/order/new/{id}', 'Partner\POrderController@newOrder');
 Route::get('partner/order/cancelled/{id}', 'Partner\POrderController@cancelledOrder');
 Route::get('partner/order/completed/{id}', 'Partner\POrderController@completedOrder');

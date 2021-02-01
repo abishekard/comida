@@ -49,6 +49,7 @@ class productController extends Controller
             'category' => $request->category,
             'discount' => $request->discount,
             'price_type' => $request->price_type,
+            'in_stock'=>1,
             'created_at' => Carbon::now()
         ]);
         $item_img->move($uplocation, $img_name);

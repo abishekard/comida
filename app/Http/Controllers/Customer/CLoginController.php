@@ -13,7 +13,7 @@ class CLoginController extends Controller
 {
 
 
-
+    //not used
     public function loginWithOtp(Request $request)
     {
         $validate = Validator::make($request->all(), [
