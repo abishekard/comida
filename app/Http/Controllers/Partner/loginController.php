@@ -22,42 +22,47 @@ class loginController extends Controller
     public function __construct()
     {
 
-     Auth::shouldUse('partner');
-
+        Auth::shouldUse('partner');
     }
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
 
-            $credentials = $request->only('mobile', 'password');
-            $token = null;
-            try {
-                if (!$token = JWTAuth::attempt($credentials)) {
-                    abort(403,'unAuthorized');
-                    // return response()->json([
-                    //     'response' => 'error',
-                    //     'message' => 'invalid_email_or_password',
-                    // ]);
-                }
-            } catch (JWTException $e) {
-                return response()->json([
-                    'response' => 'error',
-                    'message' => 'failed_to_create_token',
-                ]);
+        $credentials = $request->only('mobile', 'password');
+        $token = null;
+        try {
+            if (!$token = JWTAuth::attempt($credentials)) {
+                abort(403, 'unAuthorized');
+                // return response()->json([
+                //     'response' => 'error',
+                //     'message' => 'invalid_email_or_password',
+                // ]);
             }
-
-            $data =DB::table('partner')->where('mobile',$request->mobile)
-            ->select('name','email','mobile','shop_name','shop_image',
-            'address','pincode')->get();
-
+        } catch (JWTException $e) {
             return response()->json([
-                'response' => 'success',
-                'result' => [
-                    'type'=>'bearer',
-                    'token' => $token,
-                    'data' => $data
-                ],
+                'response' => 'error',
+                'message' => 'failed_to_create_token',
             ]);
         }
 
+        $data = DB::table('partner')->where('mobile', $request->mobile)
+            ->select(
+                'id',
+                'name',
+                'email',
+                'mobile',
+                'shop_name',
+                'shop_image',
+                'profile_image',
+                'address',
+                'pincode'
+            )->get();
 
+        return response()->json([
+            'token_type' => 'bearer',
+            'access_token' => $token,
+            'data' =>$data
+            ,
+        ]);
+    }
 }

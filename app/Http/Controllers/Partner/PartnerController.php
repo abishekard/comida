@@ -241,6 +241,30 @@ class PartnerController extends Controller
 
 
 
+    public function storeFcmToken(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'id' => 'required',
+            'fcm' => 'required'
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => 300,
+                'message' => $validate->errors()
+            ]);
+        }
+
+        $data = DB::table('partner')->where('id', $request->id)->update([
+            'fcm' => $request->fcm
+        ]);
+
+
+            return response()->json([
+                'status' => 300,
+                'message' => 'successful'
+            ]);
+    }
 
 
 

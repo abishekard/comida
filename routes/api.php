@@ -59,9 +59,10 @@ Route::post('customer/store/fcm','Customer\CInfoController@storeFcmToken');
 // partner
 
 
-Route::post('/partner/login/send/otp', 'Partner\PartnerController@CheckAndsendOtpToEmail');
-Route::post('/partner/login/with/otp', 'Partner\loginController@login');
-Route::post('/partner/create/new', 'Partner\PartnerController@createNewUser');
+Route::post('partner/login/send/otp', 'Partner\PartnerController@CheckAndsendOtpToEmail');
+Route::post('partner/login/with/otp', 'Partner\loginController@login');
+Route::post('partner/create/new', 'Partner\PartnerController@createNewUser');
+Route::post('partner/store/fcm','Partner\PartnerController@storeFcmToken');
 
 Route::post('partner/create/product','Partner\productController@createProduct');
 Route::post('partner/edit/product','Partner\productController@editProduct');
