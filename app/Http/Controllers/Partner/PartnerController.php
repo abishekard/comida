@@ -228,7 +228,7 @@ class PartnerController extends Controller
             //  print $response->body() . "\n";
             //  print getenv('SENDGRID_API_KEY').'apple';
 
-            DB::table('users')->where('email',$request->email)->
+            DB::table('partner')->where('email',$request->email)->
             update(['password'=>Hash::make($otp)]);
             return response()->json([
                 'status' => 200,
