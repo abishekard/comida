@@ -28,7 +28,7 @@ class loginController extends Controller
     public function login(Request $request)
     {
 
-        $credentials = $request->only('mobile', 'password');
+        $credentials = $request->only('email', 'password');
         $token = null;
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
@@ -45,7 +45,7 @@ class loginController extends Controller
             ]);
         }
 
-        $data = DB::table('partner')->where('mobile', $request->mobile)
+        $data = DB::table('partner')->where('email', $request->email)
             ->select(
                 'id',
                 'name',
