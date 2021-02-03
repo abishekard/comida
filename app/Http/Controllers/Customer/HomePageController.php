@@ -61,7 +61,7 @@ class HomePageController extends Controller
     public function getAllRestaurent()
     {
         $data = DB::table('partner')->select(['id',
-            'shop_name','speciality','shop_image','address','lat','long',
+            'shop_name','speciality','shop_image','address','latitude','longitude',
             'close_time','open_time','available','rating'
         ])->get();
 
