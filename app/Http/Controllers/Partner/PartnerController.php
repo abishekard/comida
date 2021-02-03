@@ -52,7 +52,8 @@ class PartnerController extends Controller
               'pincode'=>'required',
               'lat'=>'required',
               'long'=>'required',
-              'id'=>'required'
+              'id'=>'required',
+              'local_city'=>'required'
           ]);
 
           if($validate->fails())
@@ -66,6 +67,7 @@ class PartnerController extends Controller
             'address'=>$request->address,
             'state'=>$request->state,
             'city'=>$request->city,
+            'local_city'=>$request->local_city,
             'pincode'=>$request->pincode,
             'lat'=>$request->lat,
             'long'=>$request->long
