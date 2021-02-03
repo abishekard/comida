@@ -22,7 +22,7 @@ class PInfoController extends Controller
          $data = DB::table('partner')->where('id',$id)
          ->select('name','address','email','mobile','profile_image'
          ,'shop_name','shop_image','open_time','close_time',
-         'available','rating','aadhar_numer','gst_number','aadhar_front',
+         'available','rating','aadhar_number','gst_number','aadhar_front',
          'aadhar_back','speciality')->get();
 
          return response()->json(['status'=>200,
