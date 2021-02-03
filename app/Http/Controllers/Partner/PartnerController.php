@@ -50,8 +50,8 @@ class PartnerController extends Controller
               'state'=>'required',
               'city'=>'required',
               'pincode'=>'required',
-              'lat'=>'required',
-              'long'=>'required',
+              'latitude'=>'required',
+              'longitude'=>'required',
               'id'=>'required',
               'local_city'=>'required'
           ]);
@@ -69,8 +69,8 @@ class PartnerController extends Controller
             'city'=>$request->city,
             'local_city'=>$request->local_city,
             'pincode'=>$request->pincode,
-            'lat'=>$request->lat,
-            'long'=>$request->long
+            'latitude'=>$request->latitude,
+            'longitude'=>$request->longitude
         ]);
 
 
