@@ -22,7 +22,8 @@ class PInfoController extends Controller
          $data = DB::table('partner')->where('id',$id)
          ->select('name','address','email','mobile','profile_image'
          ,'shop_name','shop_image','open_time','close_time',
-         'available','rating')->get();
+         'available','rating','aadhar_numer','gst_number','aadhar_front',
+         'aadhar_back','speciality')->get();
 
          return response()->json(['status'=>200,
          'data'=>$data
@@ -110,12 +111,13 @@ class PInfoController extends Controller
 
            // return response()->json([$old_img]);
             if($old_img[0]->profile_image != null)
-            unlink($old_img[0]->profile_image);
+            unlink('public/'.$old_img[0]->profile_image);
 
             $new_img = $request->file('profile_image');
             $img_name = hexdec(uniqid()).'.'.'jpg';
             $up_location = 'images/partner_profile_image/';
-            $new_img->move($up_location,$img_name);
+            $upl='public/images/partner_profile_image/';
+            $new_img->move($upl,$img_name);
 
 
 
