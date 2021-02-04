@@ -146,4 +146,28 @@ class productController extends Controller
                 'message' => 'error'
             ]);
     }
+
+    public function showProduct(Request $request)
+    {
+        $validate = Validator::make($request->all(),[
+            'id'=>'required'
+        ]);
+
+        if($validate->fails())
+        {
+            return response()->json([
+                'status'=>300,
+                'message'=>$validate->errors()
+            ]);
+        }
+
+        $data = DB::table('product_table')->where('partner_id',$request->id)->get();
+
+        return response()->json([
+            'status'=>200,
+            'data'=>$data
+        ]);
+
+
+    }
 }

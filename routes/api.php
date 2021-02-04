@@ -64,9 +64,10 @@ Route::post('partner/login/with/otp', 'Partner\loginController@login');
 Route::post('partner/create/new', 'Partner\PartnerController@createNewUser');
 Route::post('partner/store/fcm','Partner\PartnerController@storeFcmToken');
 
-Route::post('partner/create/product','Partner\productController@createProduct');
-Route::post('partner/edit/product','Partner\productController@editProduct');
-Route::post('partner/delete/product/{id}','Partner\productController@deleteProduct');
+Route::post('partner/product/create','Partner\productController@createProduct');
+Route::post('partner/product/edit','Partner\productController@editProduct');
+Route::post('partner/product/delete/{id}','Partner\productController@deleteProduct');
+Route::post('partner/product/show','Partner\productController@showProduct');
 
 //Route::post('partner/create', 'Partner\PartnerController@createPartner');
 Route::post('partner/get/address', 'Partner\PartnerController@getPartnerAddress');
