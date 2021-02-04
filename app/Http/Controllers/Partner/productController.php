@@ -189,4 +189,31 @@ class productController extends Controller
             'data' => $fData
             ]);
     }
+
+
+    public function changeStock(Request $request)
+    {
+          $validate = Validator::make($request->all(),[
+              'product_id'=>'required',
+              'in_stock'=>'required'
+          ]);
+
+          if($validate->fails())
+          {
+              return response()->json([
+                  'status'=>300,
+                  'message'=>$validate->errors()
+              ]);
+          }
+
+          DB::table('product_table')->where('id',$request->product_id)->update([
+               'in_stock'=>$request->in_stock
+          ]);
+
+
+          return response()->json([
+            'status'=>200,
+            'message'=>'stock changed'
+        ]);
+    }
 }

@@ -68,6 +68,7 @@ Route::post('partner/product/create','Partner\productController@createProduct');
 Route::post('partner/product/edit','Partner\productController@editProduct');
 Route::post('partner/product/delete/{id}','Partner\productController@deleteProduct');
 Route::post('partner/product/show','Partner\productController@showProduct');
+Route::post('partner/product/change/stock','Partner\productController@changeStock');
 
 //Route::post('partner/create', 'Partner\PartnerController@createPartner');
 Route::post('partner/get/address', 'Partner\PartnerController@getPartnerAddress');
