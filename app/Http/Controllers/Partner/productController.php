@@ -36,7 +36,7 @@ class productController extends Controller
         $img_name = $name_gen . '.' . $img_ext;
       //  $uplocation = 'images/product_image/';
           $uplocation = 'public/images/product_image/';
-        $upl = '/images/product_image/';
+        $upl = 'images/product_image/';
         $last_img =$upl . $img_name;
 
 
