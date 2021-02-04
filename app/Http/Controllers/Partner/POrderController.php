@@ -11,7 +11,7 @@ class POrderController extends Controller
     public function newOrder($id)
     {
          $data = DB::table('customer_order_table')->where('partner_id',$id)
-         ->where('status','new')->get();
+         ->where('status','1')->get();
 
          return response()->json([
              'status'=>200,
@@ -19,10 +19,10 @@ class POrderController extends Controller
          ]);
 
     }
-    public function cancelledOrder($id)
+    public function inProgressOrder($id)
     {
         $data = DB::table('customer_order_table')->where('partner_id',$id)
-         ->where('status','cancelled')->get();
+         ->whereIn('status',[2,3])->get();
 
          return response()->json([
              'status'=>200,
@@ -32,7 +32,7 @@ class POrderController extends Controller
     public function completedOrder($id)
     {
         $data = DB::table('customer_order_table')->where('partner_id',$id)
-        ->where('status','completed')->get();
+        ->where('status','4')->get();
 
         return response()->json([
             'status'=>200,
