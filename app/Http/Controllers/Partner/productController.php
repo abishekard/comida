@@ -147,7 +147,7 @@ class productController extends Controller
             ]);
     }
 
-    public function showProduct(Request $request)
+/*    public function showProduct(Request $request)
     {
         $validate = Validator::make($request->all(),[
             'id'=>'required'
@@ -169,5 +169,24 @@ class productController extends Controller
         ]);
 
 
+    }
+*/
+
+
+    public function showProduct(Request $request)
+    {
+        $fData = array();
+        $categories = DB::table('product_table')->where('partner_id', $request->id)->pluck('category')->unique();
+      //  $partnerData = DB::table('partner')->where('id', $$request->id)->get();
+        foreach ($categories as $category) {
+            $childData = DB::table('product_table')->where('category', $category)
+            ->where('partner_id',$request->id)->get();
+            array_push($fData, ['category_name' => $category, 'category_data' => $childData]);
+        }
+       // return response()->json(['data'=>$partnerData]);
+        return response()->json([
+            'status'=>200,
+            'data' => $fData
+            ]);
     }
 }
