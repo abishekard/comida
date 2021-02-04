@@ -13,9 +13,15 @@ class POrderController extends Controller
          $data = DB::table('customer_order_table')->where('partner_id',$id)
          ->where('status','1')->get();
 
+         $temp = json_decode($data);
+         for ($i = 0; $i < sizeof($temp); $i++) {
+             $dataItem = DB::table('customer_order_item')->where('order_id', $temp[$i]->order_id)->select('item_image')->first();
+             $temp[$i]->image = $dataItem->item_image;
+         }
+
          return response()->json([
              'status'=>200,
-             'data'=>$data
+             'data'=>$temp
          ]);
 
     }
@@ -24,9 +30,15 @@ class POrderController extends Controller
         $data = DB::table('customer_order_table')->where('partner_id',$id)
          ->whereIn('status',[2,3])->get();
 
+         $temp = json_decode($data);
+         for ($i = 0; $i < sizeof($temp); $i++) {
+             $dataItem = DB::table('customer_order_item')->where('order_id', $temp[$i]->order_id)->select('item_image')->first();
+             $temp[$i]->image = $dataItem->item_image;
+         }
+
          return response()->json([
              'status'=>200,
-             'data'=>$data
+             'data'=>$temp
          ]);
     }
     public function completedOrder($id)
@@ -34,9 +46,15 @@ class POrderController extends Controller
         $data = DB::table('customer_order_table')->where('partner_id',$id)
         ->where('status','4')->get();
 
+        $temp = json_decode($data);
+        for ($i = 0; $i < sizeof($temp); $i++) {
+            $dataItem = DB::table('customer_order_item')->where('order_id', $temp[$i]->order_id)->select('item_image')->first();
+            $temp[$i]->image = $dataItem->item_image;
+        }
+
         return response()->json([
             'status'=>200,
-            'data'=>$data
+            'data'=>$temp
         ]);
     }
 
