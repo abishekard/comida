@@ -22,6 +22,11 @@ class CNotificationController extends Controller
                 "title" => $request->title,
                 "body" => $request->body,
                 "image"=>""
+            ],
+            "data" => [
+                "title" => $request->title,
+                "body" => $request->body,
+                "image"=>""
             ]
         ];
         $dataString = json_encode($data);

@@ -60,11 +60,16 @@ class POrderController extends Controller
 
     public function orderDetail($orderId)
     {
+        $orderData=DB::table('customer_order_table')->where('order_id',$orderId)->get();
+       // return response()->json($orderData);
         $data = DB::table('customer_order_item')->where('order_id',$orderId)
         ->get();
 
         return response()->json([
             'status'=>200,
+            'customer_id'=>$orderData[0]->user_id,
+            'delivery_address'=>$orderData[0]->delivered_address,
+            'created_at'=>$orderData[0]->created_at,
             'data'=>$data
         ]);
     }
