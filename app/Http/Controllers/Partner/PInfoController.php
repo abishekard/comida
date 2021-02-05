@@ -143,6 +143,11 @@ class PInfoController extends Controller
             DB::table('partner')->where('id',$request->id)
             ->update(['available'=>$request->available]);
         }
+        if($request->speciality)
+        {
+            DB::table('partner')->where('id',$request->id)
+            ->update(['speciality'=>$request->speciality]);
+        }
 
 
         if($request->address)
