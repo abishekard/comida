@@ -76,7 +76,10 @@ Route::post('/partner/get/shop', 'Partner\PartnerController@getPartnerShop');
 //Route::post('partner/login', 'Partner\loginController@login');
 Route::get('partner/profile/show/{id}', 'Partner\PInfoController@showPartner');
 Route::post('partner/profile/edit', 'Partner\PInfoController@editPartner');
+
 Route::post('partner/order/new/{id}', 'Partner\POrderController@newOrder');
 Route::post('partner/order/progress/{id}', 'Partner\POrderController@inProgressOrder');
 Route::post('partner/order/completed/{id}', 'Partner\POrderController@completedOrder');
 Route::post('partner/order/detail/{id}', 'Partner\POrderController@orderDetail');
+Route::post('partner/order/queue', 'Partner\POrderController@queueOrder');
+Route::post('partner/order/dispatch', 'Partner\POrderController@dispatchOrder');

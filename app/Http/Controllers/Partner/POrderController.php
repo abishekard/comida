@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Partner;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class POrderController extends Controller
 {
@@ -73,12 +74,49 @@ class POrderController extends Controller
             'data'=>$data
         ]);
     }
-    public function cancelledOrderDetail($orderId)
+    public function queueOrder(Request $request)
     {
+        $validate= Validator::make($request->all(),[
+            'order_id'=>'required'
+        ]);
+        if($validate->fails())
+        {
+            return response()->json([
+                'status'=>300,
+                'message'=>$validate->errors()
+            ]);
+        }
+          DB::table('customer_order_table')->where('order_id',$request->order_id)->update([
+              'status'=>2
+          ]);
+
+          return response()->json([
+            'status'=>200,
+            'data'=>'order queued'
+        ]);
 
     }
-    public function completedOrderDetail($orderId)
+    public function dispatchOrder(Request $request)
     {
 
+
+        $validate= Validator::make($request->all(),[
+            'order_id'=>'required'
+        ]);
+        if($validate->fails())
+        {
+            return response()->json([
+                'status'=>300,
+                'message'=>$validate->errors()
+            ]);
+        }
+        DB::table('customer_order_table')->where('order_id',$request->order_id)->update([
+            'status'=>3
+        ]);
+
+        return response()->json([
+          'status'=>200,
+          'data'=>'order dispatched'
+      ]);
     }
 }
