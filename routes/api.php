@@ -29,6 +29,7 @@ Route::post('/customer/login/send/otp', 'Customer\CLoginController@CheckAndsendO
 Route::post('/customer/login/with/otp', 'AuthController@login');
 Route::post('/customer/create/new', 'Customer\CLoginController@createNewUser');
 Route::post('/customer/send/notification', 'Customer\CNotificationController@sendNotification');
+Route::post('/customer/send/notification/topic', 'Customer\CNotificationController@sendNotificationToTopic');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
