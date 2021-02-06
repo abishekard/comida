@@ -72,6 +72,12 @@ class PlaceOrderController extends Controller
             ]);
         }
 
+        $fcmToken = DB::table('partner')->where('id', $request->partner_id)->pluck('fcm');
+        $shop_name = DB::table('partner')->where('id', $request->partner_id)->select('shop_name')->get()[0]->shop_name;
+        $title = 'New Order Placed';
+        $body = 'Dear ' . $shop_name . ' , ' . 'You have new order #' . $orderId . ' for Rs ' . $request->total_price;
+        $this->sendOrderNotification($title, $body, $fcmToken);
+
         return response()->json(['status' => 200, 'orderId' => $orderId]);
     }
 
@@ -147,5 +153,41 @@ class PlaceOrderController extends Controller
             'shop_address' => $partnerData[0]->address,
             'orders' => $data
         ]);
+    }
+
+
+    public function sendOrderNotification($title, $body, $fcmToken)
+    {
+
+
+        $SERVER_API_KEY = getenv('FCM_API_KEY');
+
+        $data = [
+            "registration_ids" => $fcmToken,
+            "data" => [
+                "title" => $title,
+                "body" => $body,
+                "image" => ""
+            ]
+        ];
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: key=' . $SERVER_API_KEY,
+            'Content-Type: application/json',
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+        $response = curl_exec($ch);
+
+      //  dd($response);
     }
 }

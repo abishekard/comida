@@ -18,11 +18,6 @@ class CNotificationController extends Controller
 
         $data = [
             "registration_ids" => $firebaseToken,
-            "notification" => [
-                "title" => $request->title,
-                "body" => $request->body,
-                "image"=>""
-            ],
             "data" => [
                 "title" => $request->title,
                 "body" => $request->body,
