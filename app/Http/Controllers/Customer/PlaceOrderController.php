@@ -95,7 +95,7 @@ class PlaceOrderController extends Controller
 
         return response()->json([
             'status' => 200,
-            'data' => $temp
+            'data' =>array_reverse( $temp)
         ]);
     }
 
@@ -113,8 +113,7 @@ class PlaceOrderController extends Controller
 
         return response()->json([
             'status' => 200,
-
-            'data' => $temp
+            'data' =>array_reverse( $temp)
         ]);
     }
 
