@@ -216,4 +216,28 @@ class productController extends Controller
             'message'=>'stock changed'
         ]);
     }
+
+
+    public function getProductDetails(Request $request)
+    {
+        $validate = Validator::make($request->all(),[
+            'product_id'=>'required',
+
+        ]);
+
+        if($validate->fails())
+          {
+              return response()->json([
+                  'status'=>300,
+                  'message'=>$validate->errors()
+              ]);
+          }
+
+       $mainData = DB::table('product_table')->where('id',$request->product_id)->get();
+
+        return response()->json([
+            'status' => 200,
+            'data'=>$mainData[0]
+        ]);
+    }
 }
