@@ -17,10 +17,17 @@ class OrderTableMigration extends Migration
     {
         Schema::create('customer_order_table', function (Blueprint $table) {
             $table->id();
+            $table->string('order_id');
             $table->string('user_id');
             $table->string('customer_address_id');
             $table->string('partner_id');
-         //   $table->string('quantity');
+            $table->string('total_price');
+            $table->integer('status');
+            $table->string('address_type');
+            $table->string('delivered_address');
+            $table->date('date');
+            $table->string('payment_method');
+            $table->string('lat_lng');
             $table->string('total_price')->nullable();
             $table->timestamps();
         });

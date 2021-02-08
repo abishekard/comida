@@ -19,6 +19,7 @@ class PlaceOrderController extends Controller
             'quantity' => 'required',
             'total_price' => 'required',
             'partner_id' => 'required',
+            'payment_method'=>'required'
 
         ]);
         if ($validate->fails()) {
@@ -48,7 +49,12 @@ class PlaceOrderController extends Controller
             'address_type' => $addressData[0]->address_type,
             'delivered_address' => $addressData[0]->address,
             'lat_lng' => $addressData[0]->latitude . " " . $addressData[0]->longitude,
-            'status' => 1
+            'status' => 1,
+            'week'=>Carbon::now()->weekOfMonth,
+            'month'=>Carbon::now()->month,
+            'year'=>Carbon::now()->year,
+            'date'=>Carbon::now()->toDateString(),
+            'payment_method'=>$request->payment_method
         ]);
 
 
