@@ -78,6 +78,16 @@ class PlaceOrderController extends Controller
         $body = 'Dear ' . $shop_name . ' , ' . 'You have new order #' . $orderId . ' for Rs ' . $request->total_price;
         $this->sendOrderNotification($title, $body, $fcmToken);
 
+
+
+        $CusFcmToken = DB::table('users')->where('id', $request->user_id)->pluck('fcm');
+        $Customer_name = DB::table('users')->where('id', $request->user_id)->select('name')->get()[0]->name;
+        $CusTitle = 'Order Confirmed';
+        $CusBody = 'Dear ' . $Customer_name . ' , ' . 'Your order with order-Id #' . $orderId . ' has been confirmed.';
+        $this->sendConfirmationNotification($CusTitle, $CusBody, $CusFcmToken);
+
+
+
         return response()->json(['status' => 200, 'orderId' => $orderId]);
     }
 
@@ -188,5 +198,41 @@ class PlaceOrderController extends Controller
         $response = curl_exec($ch);
 
       //  dd($response);
+    }
+
+
+    public function sendConfirmationNotification($title, $body, $fcmToken)
+    {
+
+
+        $SERVER_API_KEY = getenv('FCM_API_KEY');
+
+        $data = [
+            "registration_ids" => $fcmToken,
+            "data" => [
+                "title" => $title,
+                "body" => $body,
+                "image" => ""
+            ]
+        ];
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: key=' . $SERVER_API_KEY,
+            'Content-Type: application/json',
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+        $response = curl_exec($ch);
+
+        //  dd($response);
     }
 }
