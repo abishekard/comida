@@ -20,7 +20,7 @@ class PlaceOrderController extends Controller
             'total_price' => 'required',
             'partner_id' => 'required',
             'payment_method' => 'required',
-            'order_id'=>'required'
+            'order_id' => 'required'
 
         ]);
         if ($validate->fails()) {
@@ -31,8 +31,8 @@ class PlaceOrderController extends Controller
 
         //    return response()->json(['pid'=>$pIdArray,'qty'=>$quantity]);
         //  $orderId = round(hexdec(uniqid()) / 100);
-       // $orderId = round(microtime(true) * 100);
-       $orderId=$request->order_id;
+        // $orderId = round(microtime(true) * 100);
+        $orderId = $request->order_id;
 
         $addressData = DB::table('customeraddresstable')->where('id', $request->address_id)->get();
 

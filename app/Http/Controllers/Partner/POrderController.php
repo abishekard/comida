@@ -125,6 +125,36 @@ class POrderController extends Controller
         ]);
     }
 
+    public function orderDelivered(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'order_id' => 'required'
+        ]);
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => 300,
+                'message' => $validate->errors()
+            ]);
+        }
+        DB::table('customer_order_table')->where('order_id', $request->order_id)->update([
+            'status' => 4
+        ]);
+
+        $total = DB::table('customer_order_table')->where('order_id', $request->order_id)
+            ->select('total_price')->first()->total_price;
+        $partnerId =    DB::table('customer_order_table')->where('order_id', $request->order_id)
+            ->select('partner_id')->first()->partner_id;
+        $partnerAmount = DB::table('partner')->where('id',$partnerId)
+            ->select('account_balance')->first()->account_balance;
+        DB::table('partner')->where('id',$partnerId)->update([
+            'account_balance'=>number_format($partnerAmount)+number_format($total)
+        ]);
+        return response()->json([
+            'status' => 200,
+            'data' => 'order delivered'
+        ]);
+    }
+
 
     public function sendOrderNotification($title, $body, $fcmToken)
     {
