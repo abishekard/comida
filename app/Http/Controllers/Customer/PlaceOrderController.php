@@ -19,7 +19,8 @@ class PlaceOrderController extends Controller
             'quantity' => 'required',
             'total_price' => 'required',
             'partner_id' => 'required',
-            'payment_method'=>'required'
+            'payment_method' => 'required',
+            'order_id'=>'required'
 
         ]);
         if ($validate->fails()) {
@@ -29,7 +30,9 @@ class PlaceOrderController extends Controller
         $quantity = explode(',', $request->quantity);
 
         //    return response()->json(['pid'=>$pIdArray,'qty'=>$quantity]);
-        $orderId = round(hexdec(uniqid()) / 100);
+        //  $orderId = round(hexdec(uniqid()) / 100);
+       // $orderId = round(microtime(true) * 100);
+       $orderId=$request->order_id;
 
         $addressData = DB::table('customeraddresstable')->where('id', $request->address_id)->get();
 
@@ -50,11 +53,11 @@ class PlaceOrderController extends Controller
             'delivered_address' => $addressData[0]->address,
             'lat_lng' => $addressData[0]->latitude . " " . $addressData[0]->longitude,
             'status' => 1,
-            'week'=>Carbon::now()->weekOfMonth,
-            'month'=>Carbon::now()->month,
-            'year'=>Carbon::now()->year,
-            'date'=>Carbon::now()->toDateString(),
-            'payment_method'=>$request->payment_method
+            'week' => Carbon::now()->weekOfMonth,
+            'month' => Carbon::now()->month,
+            'year' => Carbon::now()->year,
+            'date' => Carbon::now()->toDateString(),
+            'payment_method' => $request->payment_method
         ]);
 
 
@@ -111,7 +114,7 @@ class PlaceOrderController extends Controller
 
         return response()->json([
             'status' => 200,
-            'data' =>array_reverse( $temp)
+            'data' => array_reverse($temp)
         ]);
     }
 
@@ -129,7 +132,7 @@ class PlaceOrderController extends Controller
 
         return response()->json([
             'status' => 200,
-            'data' =>array_reverse( $temp)
+            'data' => array_reverse($temp)
         ]);
     }
 
@@ -203,7 +206,7 @@ class PlaceOrderController extends Controller
 
         $response = curl_exec($ch);
 
-      //  dd($response);
+        //  dd($response);
     }
 
 

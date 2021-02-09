@@ -26,7 +26,8 @@ class testController extends Controller
             'week'=>Carbon::now()->weekOfMonth,
             'month'=>Carbon::now()->month,
             'year'=>Carbon::now()->year,
-            'date'=>Carbon::now()->toDateString()
+            'date'=>Carbon::now()->toDateString(),
+            'current_milli'=>round(microtime(true) * 100)
         ]);
     }
 }
