@@ -66,7 +66,8 @@ class testController extends Controller
            'weekSize'=>sizeof($currentWeekData),
            'Month'=>$currentmonthData,
            'monthTotal'=>$monthTotal,
-           'monthSize'=>sizeof($currentmonthData)
+           'monthSize'=>sizeof($currentmonthData),
+           'date'=>date('Y/m/d H:i:s')
         ]);
     }
 }
