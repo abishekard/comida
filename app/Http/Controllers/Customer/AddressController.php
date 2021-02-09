@@ -27,7 +27,8 @@ class AddressController extends Controller
                 'latitude'=>'required',
                 'longitude'=>'required',
                 'pincode'=>'required|max:6|min:6',
-                'address_type'=>'required'
+                'address_type'=>'required',
+                'local_city'=>'required'
           ]);
           if($validate->fails())
           {
@@ -37,6 +38,7 @@ class AddressController extends Controller
               'address'=>$request->address,
               'state'=>$request->state,
               'city'=>$request->city,
+              'local_city'=>$request->local_city,
               'landmark'=>$request->landmark,
               'pincode'=>$request->pincode,
               'locality'=>$request->locality,
