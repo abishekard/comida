@@ -88,3 +88,10 @@ Route::post('partner/order/dispatch', 'Partner\POrderController@dispatchOrder');
 Route::post('partner/sales/current', 'Partner\SalesController@currentSales');
 
 Route::post('test', 'testController@test1');
+
+
+// DeliveryPartner
+
+Route::post('delivery/partner/create','Delivery\DPartnerController@createPartner');
+Route::post('delivery/partner/login', 'Delivery\DLoginController@login');
+Route::post('delivery/partner/info', 'Delivery\DInfoController@getInfo');

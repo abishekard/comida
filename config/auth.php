@@ -50,6 +50,10 @@ return [
             'driver' => 'jwt',
             'provider' => 'partner'
         ],
+        'delivery' => [
+            'driver' => 'jwt',
+            'provider' => 'delivery'
+        ],
     ],
 
     /*
@@ -77,6 +81,10 @@ return [
         'partner' => [
             'driver' => 'eloquent',
             'model' => App\Models\partnerModel::class,
+        ],
+        'delivery' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\DeliveryPartnerModel::class,
         ],
 
         // 'users' => [
