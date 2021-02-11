@@ -73,7 +73,7 @@ class DOrderController extends Controller
         $data = DB::table('customer_order_item')->where('order_id', $orderId)
             ->get();
         $lat_lng=explode(' ',$orderData[0]->lat_lng);
-            return response()->json(['lat'=>$lat_lng[0],'lng'=>$lat_lng[1]]);
+          //  return response()->json(['lat'=>$lat_lng[0],'lng'=>$lat_lng[1]]);
         return response()->json([
             'status' => 200,
             'customer_id' => $orderData[0]->user_id,

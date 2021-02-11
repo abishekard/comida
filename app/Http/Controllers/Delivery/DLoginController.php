@@ -44,6 +44,7 @@ class DLoginController extends Controller
                 'email',
                 'mobile',
                 'profile_image',
+                'aadhar_number',
                 'address',
                 'pincode'
             )->get();

@@ -11,7 +11,7 @@ use Illuminate\Support\Carbon;
 
 class DPartnerController extends Controller
 {
-    public function createPartner(Request $request)
+  /*  public function createPartner(Request $request)
     {
          $validate = Validator::make($request->all(),[
              'email'=>'required|unique:delivery_partner',
@@ -39,7 +39,7 @@ class DPartnerController extends Controller
              'message'=>'registered'
          ]);
     }
-
+*/
     public function getDeliveryPartnerAddress(Request $request)
     {
           $validate = Validator::make($request->all(),[
@@ -168,8 +168,8 @@ class DPartnerController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|unique:partner',
-            'mobile' => 'required|max:10|unique:users',
+            'email' => 'required|unique:delivery_partner',
+            'mobile' => 'required|max:10|unique:delivery_partner',
         //    'password' => 'required'
         ]);
         if ($validate->fails()) {

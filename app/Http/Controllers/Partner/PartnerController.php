@@ -189,7 +189,7 @@ class PartnerController extends Controller
         $validate = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|unique:partner',
-            'mobile' => 'required|max:10|unique:users',
+            'mobile' => 'required|max:10|unique:partner',
         //    'password' => 'required'
         ]);
         if ($validate->fails()) {
