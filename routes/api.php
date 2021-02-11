@@ -104,3 +104,4 @@ Route::post('delivery/partner/get/personal/info', 'Delivery\DPartnerController@g
 Route::post('delivery/partner/order/new/{id}', 'Delivery\DOrderController@newOrder');
 Route::post('delivery/partner/order/progress/{id}', 'Delivery\DOrderController@inProgressOrder');
 Route::post('delivery/partner/order/completed/{id}', 'Delivery\DOrderController@completedOrder');
+Route::post('delivery/partner/order/detail/{id}', 'Delivery\DOrderController@orderDetail');
