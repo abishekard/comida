@@ -99,5 +99,8 @@ Route::post('delivery/partner/store/fcm','Delivery\DPartnerController@storeFcmTo
 
 //Route::post('delivery/partner/create','Delivery\DPartnerController@createPartner');
 //Route::post('delivery/partner/login', 'Delivery\DLoginController@login');
-//Route::post('delivery/partner/info', 'Delivery\DInfoController@getInfo');
+Route::post('delivery/partner/show/profile', 'Delivery\DInfoController@showProfile');
 Route::post('delivery/partner/get/personal/info', 'Delivery\DPartnerController@getPersonalInfo');
+Route::post('delivery/partner/order/new/{id}', 'Delivery\DOrderController@newOrder');
+Route::post('delivery/partner/order/progress/{id}', 'Delivery\DOrderController@inProgressOrder');
+Route::post('delivery/partner/order/completed/{id}', 'Delivery\DOrderController@completedOrder');

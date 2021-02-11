@@ -16,7 +16,7 @@ class DInfoController extends Controller
         $this->middleware('auth');
     }
 
-    public function getInfo(Request $request)
+    public function showProfile(Request $request)
     {
         $validate= Validator::make($request->all(),[
             'id'=>'required'
@@ -29,7 +29,9 @@ class DInfoController extends Controller
             ]);
         }
 
-        $data=DB::table('delivery_partner')->where('id',$request->id)->get();
+        $data=DB::table('delivery_partner')->where('id',$request->id)->select('name','email',
+        'profile_image','available','aadhar_number','mobile','dob'
+        )->get();
 
         return response()->json([
             'status'=>200,
