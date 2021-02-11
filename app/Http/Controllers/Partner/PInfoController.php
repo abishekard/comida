@@ -182,4 +182,60 @@ class PInfoController extends Controller
             'message'=>'updated'
         ]);
     }
+
+    public function getDeliveryPartner(Request $request)
+    {
+        $validate = Validator::make($request->all(),[
+            'id'=>'required'
+        ]);
+
+        if($validate->fails())
+        {
+            return response()->json([
+                'status'=>300,
+                'messager'=>$validate->errors()
+            ]);
+        }
+
+        $data=DB::table('delivery_partner')->where('partner_id',$request->id)
+        ->select('name','id','mobile','profile_image','aadhar_number','available')->get();
+
+        return response()->json([
+            'status'=>200,
+            'data'=>$data
+        ]);
+    }
+
+    public function addDeliveryPartner(Request $request)
+    {
+        $validate = Validator::make($request->all(),[
+            'mobile'=>'required',
+            'partner_id'=>'required'
+        ]);
+
+        if($validate->fails())
+        {
+            return response()->json([
+                'status'=>300,
+                'messager'=>$validate->errors()
+            ]);
+        }
+
+        $temp=DB::table('delivery_partner')->where('mobile',$request->mobile)->select('name')->get();
+        if(sizeof($temp)==0)
+        {
+            return response()->json([
+                'status'=>350,
+                'data'=>'no delivery partner found'
+            ]);
+        }
+        DB::table('delivery_partner')->where('mobile',$request->mobile)->update([
+              'partner_id'=>$request->partner_id
+        ]);
+
+        return response()->json([
+            'status'=>200,
+            'data'=>'delivery partner registered'
+        ]);
+    }
 }
