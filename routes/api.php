@@ -92,6 +92,12 @@ Route::post('test', 'testController@test1');
 
 // DeliveryPartner
 
-Route::post('delivery/partner/create','Delivery\DPartnerController@createPartner');
-Route::post('delivery/partner/login', 'Delivery\DLoginController@login');
-Route::post('delivery/partner/info', 'Delivery\DInfoController@getInfo');
+Route::post('delivery/partner/login/send/otp', 'Delivery\DPartnerController@CheckAndsendOtpToEmail');
+Route::post('delivery/partner/login/with/otp', 'Delivery\DLoginController@login');
+Route::post('delivery/partner/create/new', 'Delivery\DPartnerController@createNewUser');
+Route::post('delivery/partner/store/fcm','Delivery\DPartnerController@storeFcmToken');
+
+//Route::post('delivery/partner/create','Delivery\DPartnerController@createPartner');
+//Route::post('delivery/partner/login', 'Delivery\DLoginController@login');
+//Route::post('delivery/partner/info', 'Delivery\DInfoController@getInfo');
+Route::post('delivery/partner/get/personal/info', 'Delivery\DPartnerController@getPersonalInfo');
