@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Delivery;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class DOrderController extends Controller
 {
@@ -81,7 +82,55 @@ class DOrderController extends Controller
             'created_at' => $orderData[0]->created_at,
             'latitude'=>$lat_lng[0],
             'longitude'=>$lat_lng[1],
+            'otp'=>$orderData->otp,
             'data' => $data
         ]);
     }
+
+    public function orderDelivered(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'order_id' => 'required',
+            'otp'=>'required'
+        ]);
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => 300,
+                'message' => $validate->errors()
+            ]);
+        }
+
+        $otp=DB::table('customer_order_table')->where('order_id', $request->order_id)->select('otp')
+        ->first()->otp;
+
+
+        if($otp!=$request->otp)
+        {
+            return response()->json([
+                'status'=>350,
+                'message'=>'wrong otp'
+            ]);
+        }
+
+        DB::table('customer_order_table')->where('order_id', $request->order_id)->update([
+            'status' => 4
+        ]);
+
+        $total = DB::table('customer_order_table')->where('order_id', $request->order_id)
+            ->select('total_price')->first()->total_price;
+        $partnerId =    DB::table('customer_order_table')->where('order_id', $request->order_id)
+            ->select('partner_id')->first()->partner_id;
+        $partnerAmount = DB::table('partner')->where('id',$partnerId)
+            ->select('account_balance')->first()->account_balance;
+        DB::table('partner')->where('id',$partnerId)->update([
+            'account_balance'=>$partnerAmount+$total
+        ]);
+
+        return response()->json([
+            'status' => 200,
+            'data' => 'order delivered',
+
+        ]);
+    }
+
 }
