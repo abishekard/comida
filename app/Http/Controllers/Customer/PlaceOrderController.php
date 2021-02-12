@@ -112,7 +112,7 @@ class PlaceOrderController extends Controller
     public function getNewOrders($id)
     {
         $data = DB::table('customer_order_table')->where('user_id', $id)->whereIn('status', [1, 2, 3])
-            ->select('order_id', 'delivered_address', 'customer_address_id', 'status', 'created_at', 'total_price', 'partner_id')
+            ->select('order_id', 'delivered_address', 'customer_address_id', 'status', 'created_at', 'total_price', 'partner_id','otp')
             ->get();
 
         $temp = json_decode($data);
