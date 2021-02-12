@@ -103,7 +103,7 @@ Route::post('delivery/partner/store/fcm','Delivery\DPartnerController@storeFcmTo
 //Route::post('delivery/partner/login', 'Delivery\DLoginController@login');
 Route::post('delivery/partner/get/address', 'Delivery\DPartnerController@getDeliveryPartnerAddress');
 Route::post('delivery/partner/show/profile', 'Delivery\DInfoController@showProfile');
-Route::post('delivery/partner/edit/profile', 'Delivery\DInfoController@edtProfile');
+Route::post('delivery/partner/edit/profile', 'Delivery\DInfoController@editProfile');
 Route::post('delivery/partner/get/personal/info', 'Delivery\DPartnerController@getPersonalInfo');
 Route::post('delivery/partner/order/new/{id}', 'Delivery\DOrderController@newOrder');
 Route::post('delivery/partner/order/progress/{id}', 'Delivery\DOrderController@inProgressOrder');
