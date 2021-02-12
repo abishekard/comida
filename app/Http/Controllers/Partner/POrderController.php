@@ -98,7 +98,8 @@ class POrderController extends Controller
 
 
         $validate = Validator::make($request->all(), [
-            'order_id' => 'required'
+            'order_id' => 'required',
+            'delivery_partner_id'=>'required'
         ]);
         if ($validate->fails()) {
             return response()->json([
@@ -107,7 +108,8 @@ class POrderController extends Controller
             ]);
         }
         DB::table('customer_order_table')->where('order_id', $request->order_id)->update([
-            'status' => 3
+            'status' => 3,
+            'delivery_partner_id'=>$request->delivery_partner_id
         ]);
         $userId = DB::table('customer_order_table')->where('order_id', $request->order_id)
             ->select('user_id')->first();
