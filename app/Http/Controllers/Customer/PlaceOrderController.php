@@ -38,7 +38,8 @@ class PlaceOrderController extends Controller
 
         //  return response()->json($addressData);
 
-
+        $digits = 4;
+        $otp= rand(pow(10, $digits - 1), pow(10, $digits) - 1);
 
 
 
@@ -57,6 +58,7 @@ class PlaceOrderController extends Controller
             'month' => Carbon::now()->month,
             'year' => Carbon::now()->year,
             'date' => Carbon::now()->toDateString(),
+            'otp'=>$otp,
             'payment_method' => $request->payment_method
         ]);
 
@@ -81,12 +83,19 @@ class PlaceOrderController extends Controller
             ]);
         }
 
+
+
         $fcmToken = DB::table('partner')->where('id', $request->partner_id)->pluck('fcm');
         $shop_name = DB::table('partner')->where('id', $request->partner_id)->select('shop_name')->get()[0]->shop_name;
         $title = 'New Order Placed';
         $body = 'Dear ' . $shop_name . ' , ' . 'You have new order #' . $orderId . ' for Rs ' . $request->total_price;
         $this->sendOrderNotification($title, $body, $fcmToken);
 
+        $delFcmToken=DB::table('delivery_partner')->where('partner_id',$request->partner_id)->pluck('fcm');
+        $delTitle="New Order Placed";
+        $delBody="Dear , Delivery Partner. New Order with order-id #".$orderId." Placed with Partner Restaurant";
+        if(sizeof( $delFcmToken)>0)
+        $this->sendOrderNotification($delTitle,$delBody,$delFcmToken);
 
 
         $CusFcmToken = DB::table('users')->where('id', $request->user_id)->pluck('fcm');

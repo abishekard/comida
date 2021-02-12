@@ -121,6 +121,14 @@ class POrderController extends Controller
             . $request->order_id . ' is Out for delivery. Your order will be at your door-step  in few minutes';
 
         $this->sendOrderNotification($title, $body, [$fcmToken]);
+
+        $delData=DB::table('delivery_partner')->where('id',$request->delivery_parnter_id)->first();
+        $delName=$delData->name;
+        $delFcmToken=[$delData->fcm];
+        $delTitle="New Delivery Assigned";
+        $delBody="Dear ".$delName." you are assigned new delivery with order-id #".$request->order_id;
+        $this->sendOrderNotification($delTitle,$delBody,$delFcmToken);
+
         return response()->json([
             'status' => 200,
             'data' => 'order dispatched'
