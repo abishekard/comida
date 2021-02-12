@@ -112,7 +112,8 @@ class PlaceOrderController extends Controller
     public function getNewOrders($id)
     {
         $data = DB::table('customer_order_table')->where('user_id', $id)->whereIn('status', [1, 2, 3])
-            ->select('order_id', 'delivered_address', 'customer_address_id', 'status', 'created_at', 'total_price', 'partner_id','otp')
+            ->select('order_id', 'delivered_address', 'customer_address_id', 'status', 'created_at',
+            'total_price', 'partner_id')
             ->get();
 
         $temp = json_decode($data);
@@ -153,7 +154,8 @@ class PlaceOrderController extends Controller
             'status',
             'address_type',
             'delivered_address',
-            'order_id'
+            'order_id',
+            'otp'
         )->get();
         $partnerData = DB::table('partner')->where('id', $mainData[0]->partner_id)->select(
             'shop_name',
@@ -172,6 +174,7 @@ class PlaceOrderController extends Controller
             'partner_id' => $mainData[0]->partner_id,
             'status' => $mainData[0]->status,
             'address_type' => $mainData[0]->address_type,
+            'otp' => $mainData[0]->otp,
             'delivered_address' => $mainData[0]->delivered_address,
             'order_id' => $mainData[0]->order_id,
             'shop_name' => $partnerData[0]->shop_name,
