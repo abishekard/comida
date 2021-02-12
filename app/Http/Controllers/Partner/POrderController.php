@@ -122,7 +122,7 @@ class POrderController extends Controller
 
         $this->sendOrderNotification($title, $body, [$fcmToken]);
 
-        $delData=DB::table('delivery_partner')->where('id',$request->delivery_parnter_id)->first();
+        $delData=DB::table('delivery_partner')->where('id',$request->delivery_partner_id)->select('fcm', 'name')->first();
         $delName=$delData->name;
         $delFcmToken=[$delData->fcm];
         $delTitle="New Delivery Assigned";
