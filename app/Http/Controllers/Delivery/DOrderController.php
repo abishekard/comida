@@ -82,7 +82,7 @@ class DOrderController extends Controller
             'created_at' => $orderData[0]->created_at,
             'latitude'=>$lat_lng[0],
             'longitude'=>$lat_lng[1],
-            'otp'=>$orderData->otp,
+            'otp'=>$orderData[0]->otp,
             'data' => $data
         ]);
     }
