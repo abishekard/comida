@@ -12,11 +12,11 @@ class PInfoController extends Controller
 {
 
 
-    public function __construct()
-    {
-        Auth::shouldUse('partner');
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     Auth::shouldUse('partner');
+    //     $this->middleware('auth');
+    // }
     public function showPartner($id)
     {
          $data = DB::table('partner')->where('id',$id)
@@ -236,6 +236,31 @@ class PInfoController extends Controller
         return response()->json([
             'status'=>200,
             'data'=>'delivery partner registered'
+        ]);
+    }
+
+    public function removeDeliveryPartner(Request $request)
+    {
+        $validate = Validator::make($request->all(),[
+            'delivery_partner_id'=>'required',
+
+        ]);
+
+        if($validate->fails())
+        {
+            return response()->json([
+                'status'=>300,
+                'messager'=>$validate->errors()
+            ]);
+        }
+
+
+        DB::table('delivery_partner')->where('id',$request->delivery_partner_id)
+        ->update(['partner_id'=>0]);
+
+        return response()->json([
+            'status'=>200,
+            'data'=>'delivery partner removed'
         ]);
     }
 }

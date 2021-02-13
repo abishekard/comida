@@ -80,6 +80,7 @@ Route::get('partner/profile/show/{id}', 'Partner\PInfoController@showPartner');
 Route::post('partner/profile/edit', 'Partner\PInfoController@editPartner');
 Route::post('partner/get/delivery/partner', 'Partner\PInfoController@getDeliveryPartner');
 Route::post('partner/add/delivery/partner', 'Partner\PInfoController@addDeliveryPartner');
+Route::post('partner/remove/delivery/partner', 'Partner\PInfoController@removeDeliveryPartner');
 
 Route::post('partner/order/new/{id}', 'Partner\POrderController@newOrder');
 Route::post('partner/order/progress/{id}', 'Partner\POrderController@inProgressOrder');
