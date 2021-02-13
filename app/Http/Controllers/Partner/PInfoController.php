@@ -138,7 +138,7 @@ class PInfoController extends Controller
             DB::table('partner')->where('id',$request->id)
             ->update(['close_time'=>$request->close_time]);
         }
-        if($request->available==0||$request->available==1)
+        if($request->available)
         {
             DB::table('partner')->where('id',$request->id)
             ->update(['available'=>$request->available]);
