@@ -53,6 +53,7 @@ class HomePageController extends Controller
             'speciality'=>$partnerData[0]->speciality,
             'open_time'=>$partnerData[0]->open_time,
             'close_time'=>$partnerData[0]->close_time,
+            'available'=>$partnerData[0]->available,
             'rating'=>$partnerData[0]->rating,
             'data' => $fData
             ]);
