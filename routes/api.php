@@ -111,4 +111,5 @@ Route::post('delivery/partner/order/progress/{id}', 'Delivery\DOrderController@i
 Route::post('delivery/partner/order/completed/{id}', 'Delivery\DOrderController@completedOrder');
 Route::post('delivery/partner/order/detail/{id}', 'Delivery\DOrderController@orderDetail');
 Route::post('delivery/partner/order/delivered', 'Delivery\DOrderController@orderDelivered');
+Route::post('delivery/partner/delivery/report', 'Delivery\DeliveryController@currentDeliveryReport');
 
