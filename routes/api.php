@@ -89,6 +89,7 @@ Route::post('partner/order/detail/{id}', 'Partner\POrderController@orderDetail')
 Route::post('partner/order/queue', 'Partner\POrderController@queueOrder');
 Route::post('partner/order/dispatch', 'Partner\POrderController@dispatchOrder');
 Route::post('partner/sales/current', 'Partner\SalesController@currentSales');
+Route::post('partner/available', 'Partner\PartnerAvailabilityController@isPartnerAvailableToTakeOrder');
 
 Route::post('test', 'testController@test1');
 
