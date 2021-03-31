@@ -18,7 +18,7 @@ class PartnerAvailabilityController extends Controller
           if($validate->fails())
           {
               return response()->json([
-                  "status"=>200,
+                  "status"=>300,
                   "message"=>$validate->errors()
               ]);
           }
