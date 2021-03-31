@@ -12,7 +12,8 @@ class PartnerAvailabilityController extends Controller
     public function isPartnerAvailableToTakeOrder(Request $request)
     {
           $validate = Validator::make($request->all(),[
-                "partner_id" => "required"
+                "partner_id" => "required",
+                "address_id"=>"required"
           ]);
 
           if($validate->fails())
@@ -23,12 +24,22 @@ class PartnerAvailabilityController extends Controller
               ]);
           }
 
+          $customerAddress = DB::table('customeraddresstable')->where('id',$request->address_id)->select('local_city')->first();
+
           $data = DB::table('partner')->where("id",$request->partner_id)->select("available","local_city")->first();
 
+          $addressCheck=0;
+          if($customerAddress->local_city == $data->local_city)
+          {
+               $addressCheck=1;
+          }
+          else{
+              $addressCheck=0;
+          }
           return response()->json([
               "status"=>200,
               "available"=>$data->available,
-              "city"=>$data->local_city
+              "address_check"=>$addressCheck
           ]);
     }
 }
