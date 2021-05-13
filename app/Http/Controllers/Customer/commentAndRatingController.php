@@ -41,7 +41,7 @@ class commentAndRatingController extends Controller
             $img_name = hexdec(uniqid()) . '.' . 'jpg';
             $up_location = 'public/images/comment_image/';
             // $up_location = 'images/comment_image/';
-            $upl = 'images/customer_profile_image/';
+            $upl = 'images/comment_image/';
             $new_img->move($up_location, $img_name);
             $upl_1 = $upl . $img_name;
         }
@@ -51,7 +51,7 @@ class commentAndRatingController extends Controller
             $img_name = hexdec(uniqid()) . '.' . 'jpg';
             $up_location = 'public/images/comment_image/';
             //  $up_location = 'images/comment_image/';
-            $upl = 'images/customer_profile_image/';
+            $upl = 'images/comment_image/';
             $new_img->move($up_location, $img_name);
             $upl_2 = $upl . $img_name;
         }
@@ -61,7 +61,7 @@ class commentAndRatingController extends Controller
             $img_name = hexdec(uniqid()) . '.' . 'jpg';
             $up_location = 'public/images/comment_image/';
             //  $up_location = 'images/comment_image/';
-            $upl = 'images/customer_profile_image/';
+            $upl = 'images/comment_image/';
             $new_img->move($up_location, $img_name);
             $upl_3 = $upl . $img_name;
         }
@@ -71,7 +71,7 @@ class commentAndRatingController extends Controller
             $img_name = hexdec(uniqid()) . '.' . 'jpg';
             $up_location = 'public/images/comment_image/';
             //  $up_location = 'images/comment_image/';
-            $upl = 'images/customer_profile_image/';
+            $upl = 'images/comment_image/';
             $new_img->move($up_location, $img_name);
             $upl_4 = $upl . $img_name;
         }
