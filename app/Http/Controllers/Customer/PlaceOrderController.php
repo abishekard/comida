@@ -39,7 +39,7 @@ class PlaceOrderController extends Controller
         //  return response()->json($addressData);
 
         $digits = 4;
-        $otp= rand(pow(10, $digits - 1), pow(10, $digits) - 1);
+        $otp = rand(pow(10, $digits - 1), pow(10, $digits) - 1);
 
 
 
@@ -58,7 +58,7 @@ class PlaceOrderController extends Controller
             'month' => Carbon::now()->month,
             'year' => Carbon::now()->year,
             'date' => Carbon::now()->toDateString(),
-            'otp'=>$otp,
+            'otp' => $otp,
             'payment_method' => $request->payment_method
         ]);
 
@@ -91,11 +91,11 @@ class PlaceOrderController extends Controller
         $body = 'Dear ' . $shop_name . ' , ' . 'You have new order #' . $orderId . ' for Rs ' . $request->total_price;
         $this->sendOrderNotification($title, $body, $fcmToken);
 
-        $delFcmToken=DB::table('delivery_partner')->where('partner_id',$request->partner_id)->pluck('fcm');
-        $delTitle="New Order Placed";
-        $delBody="Dear , Delivery Partner. New Order with order-id #".$orderId." Placed with Partner Restaurant";
-        if(sizeof( $delFcmToken)>0)
-        $this->sendOrderNotification($delTitle,$delBody,$delFcmToken);
+        $delFcmToken = DB::table('delivery_partner')->where('partner_id', $request->partner_id)->pluck('fcm');
+        $delTitle = "New Order Placed";
+        $delBody = "Dear , Delivery Partner. New Order with order-id #" . $orderId . " Placed with Partner Restaurant";
+        if (sizeof($delFcmToken) > 0)
+            $this->sendOrderNotification($delTitle, $delBody, $delFcmToken);
 
 
         $CusFcmToken = DB::table('users')->where('id', $request->user_id)->pluck('fcm');
@@ -112,8 +112,15 @@ class PlaceOrderController extends Controller
     public function getNewOrders($id)
     {
         $data = DB::table('customer_order_table')->where('user_id', $id)->whereIn('status', [1, 2, 3])
-            ->select('order_id', 'delivered_address', 'customer_address_id', 'status', 'created_at',
-            'total_price', 'partner_id')
+            ->select(
+                'order_id',
+                'delivered_address',
+                'customer_address_id',
+                'status',
+                'created_at',
+                'total_price',
+                'partner_id'
+            )
             ->get();
 
         $temp = json_decode($data);
@@ -155,7 +162,8 @@ class PlaceOrderController extends Controller
             'address_type',
             'delivered_address',
             'order_id',
-            'otp'
+            'otp',
+            'comment'
         )->get();
         $partnerData = DB::table('partner')->where('id', $mainData[0]->partner_id)->select(
             'shop_name',
@@ -181,6 +189,7 @@ class PlaceOrderController extends Controller
             'shop_image' => $partnerData[0]->shop_image,
             'speciality' => $partnerData[0]->speciality,
             'shop_address' => $partnerData[0]->address,
+            'comment'=>$mainData[0]->comment,
             'orders' => $data
         ]);
     }

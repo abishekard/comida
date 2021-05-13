@@ -55,6 +55,8 @@ Route::post('customer/product/category/all/{partner_id}','Customer\HomePageContr
 Route::post('customer/restaurent/all','Customer\HomePageController@getAllRestaurent');
 Route::post('customer/partner/info/{id}','Customer\HomePageController@getPartnerInfo');
 Route::post('customer/store/fcm','Customer\CInfoController@storeFcmToken');
+Route::post('customer/set/comment','Customer\commentAndRatingController@setComment');
+Route::post('customer/get/comment','Customer\commentAndRatingController@getCommentForUser');
 
 
 // partner
@@ -90,6 +92,7 @@ Route::post('partner/order/queue', 'Partner\POrderController@queueOrder');
 Route::post('partner/order/dispatch', 'Partner\POrderController@dispatchOrder');
 Route::post('partner/sales/current', 'Partner\SalesController@currentSales');
 Route::post('partner/available', 'Partner\PartnerAvailabilityController@isPartnerAvailableToTakeOrder');
+Route::post('partner/get/comment','Customer\commentAndRatingController@getCommentForPartner');
 
 Route::post('test', 'testController@test1');
 
