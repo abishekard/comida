@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 
 //Route::post('/createCustomer', 'Customer\CreateCustomer@create');
-Route::post('/customer/create/address','Customer\AddressController@storeAddress');
+Route::post('/customer/create/address', 'Customer\AddressController@storeAddress');
 
 Route::post('/customer/placeOrder', 'Customer\PlaceOrderController@PlaceOrder');
 Route::post('/customer/orders/new/{id}', 'Customer\PlaceOrderController@getNewOrders');
@@ -30,6 +30,7 @@ Route::post('/customer/login/with/otp', 'AuthController@login');
 Route::post('/customer/create/new', 'Customer\CLoginController@createNewUser');
 Route::post('/customer/send/notification', 'Customer\CNotificationController@sendNotification');
 Route::post('/customer/send/notification/topic', 'Customer\CNotificationController@sendNotificationToTopic');
+Route::post('/customer/test/email', 'Customer\commentAndRatingController@testEmail');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -40,23 +41,22 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
-
 });
 
-Route::get('customer/show/profile/{id}','Customer\CInfoController@showProfile');
-Route::post('customer/edit/profile','Customer\CInfoController@editProfile');
-Route::get('customer/show/address/{id}','Customer\CInfoController@showAddress');
-Route::post('customer/edit/address','Customer\CInfoController@editAddress');
-Route::post('customer/delete/address/{id}','Customer\CInfoController@deleteAddress');
+Route::get('customer/show/profile/{id}', 'Customer\CInfoController@showProfile');
+Route::post('customer/edit/profile', 'Customer\CInfoController@editProfile');
+Route::get('customer/show/address/{id}', 'Customer\CInfoController@showAddress');
+Route::post('customer/edit/address', 'Customer\CInfoController@editAddress');
+Route::post('customer/delete/address/{id}', 'Customer\CInfoController@deleteAddress');
 
-Route::post('customer/send/email','Customer\CEmailController@emailOtpVerify');
-Route::post('customer/product/all','Customer\HomePageController@getAllProductList');
-Route::post('customer/product/category/all/{partner_id}','Customer\HomePageController@getAllProductCategory');
-Route::post('customer/restaurent/all','Customer\HomePageController@getAllRestaurent');
-Route::post('customer/partner/info/{id}','Customer\HomePageController@getPartnerInfo');
-Route::post('customer/store/fcm','Customer\CInfoController@storeFcmToken');
-Route::post('customer/set/comment','Customer\commentAndRatingController@setComment');
-Route::post('customer/get/comment','Customer\commentAndRatingController@getCommentForUser');
+Route::post('customer/send/email', 'Customer\CEmailController@emailOtpVerify');
+Route::post('customer/product/all', 'Customer\HomePageController@getAllProductList');
+Route::post('customer/product/category/all/{partner_id}', 'Customer\HomePageController@getAllProductCategory');
+Route::post('customer/restaurent/all', 'Customer\HomePageController@getAllRestaurent');
+Route::post('customer/partner/info/{id}', 'Customer\HomePageController@getPartnerInfo');
+Route::post('customer/store/fcm', 'Customer\CInfoController@storeFcmToken');
+Route::post('customer/set/comment', 'Customer\commentAndRatingController@setComment');
+Route::post('customer/get/comment', 'Customer\commentAndRatingController@getCommentForUser');
 
 
 // partner
@@ -65,14 +65,14 @@ Route::post('customer/get/comment','Customer\commentAndRatingController@getComme
 Route::post('partner/login/send/otp', 'Partner\PartnerController@CheckAndsendOtpToEmail');
 Route::post('partner/login/with/otp', 'Partner\loginController@login');
 Route::post('partner/create/new', 'Partner\PartnerController@createNewUser');
-Route::post('partner/store/fcm','Partner\PartnerController@storeFcmToken');
+Route::post('partner/store/fcm', 'Partner\PartnerController@storeFcmToken');
 
-Route::post('partner/product/create','Partner\productController@createProduct');
-Route::post('partner/product/edit','Partner\productController@editProduct');
-Route::post('partner/product/delete/{id}','Partner\productController@deleteProduct');
-Route::post('partner/product/show','Partner\productController@showProduct');
-Route::post('partner/product/detail/show','Partner\productController@getProductDetails');
-Route::post('partner/product/change/stock','Partner\productController@changeStock');
+Route::post('partner/product/create', 'Partner\productController@createProduct');
+Route::post('partner/product/edit', 'Partner\productController@editProduct');
+Route::post('partner/product/delete/{id}', 'Partner\productController@deleteProduct');
+Route::post('partner/product/show', 'Partner\productController@showProduct');
+Route::post('partner/product/detail/show', 'Partner\productController@getProductDetails');
+Route::post('partner/product/change/stock', 'Partner\productController@changeStock');
 
 //Route::post('partner/create', 'Partner\PartnerController@createPartner');
 Route::post('partner/get/address', 'Partner\PartnerController@getPartnerAddress');
@@ -92,7 +92,7 @@ Route::post('partner/order/queue', 'Partner\POrderController@queueOrder');
 Route::post('partner/order/dispatch', 'Partner\POrderController@dispatchOrder');
 Route::post('partner/sales/current', 'Partner\SalesController@currentSales');
 Route::post('partner/available', 'Partner\PartnerAvailabilityController@isPartnerAvailableToTakeOrder');
-Route::post('partner/get/comment','Customer\commentAndRatingController@getCommentForPartner');
+Route::post('partner/get/comment', 'Customer\commentAndRatingController@getCommentForPartner');
 
 Route::post('test', 'testController@test1');
 
@@ -102,7 +102,7 @@ Route::post('test', 'testController@test1');
 Route::post('delivery/partner/login/send/otp', 'Delivery\DPartnerController@CheckAndsendOtpToEmail');
 Route::post('delivery/partner/login/with/otp', 'Delivery\DLoginController@login');
 Route::post('delivery/partner/create/new', 'Delivery\DPartnerController@createNewUser');
-Route::post('delivery/partner/store/fcm','Delivery\DPartnerController@storeFcmToken');
+Route::post('delivery/partner/store/fcm', 'Delivery\DPartnerController@storeFcmToken');
 
 //Route::post('delivery/partner/create','Delivery\DPartnerController@createPartner');
 //Route::post('delivery/partner/login', 'Delivery\DLoginController@login');
@@ -116,4 +116,3 @@ Route::post('delivery/partner/order/completed/{id}', 'Delivery\DOrderController@
 Route::post('delivery/partner/order/detail/{id}', 'Delivery\DOrderController@orderDetail');
 Route::post('delivery/partner/order/delivered', 'Delivery\DOrderController@orderDelivered');
 Route::post('delivery/partner/delivery/report', 'Delivery\DeliveryController@currentDeliveryReport');
-

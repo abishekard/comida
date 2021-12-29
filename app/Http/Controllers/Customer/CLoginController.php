@@ -67,15 +67,14 @@ class CLoginController extends Controller
             //    ]);
             //    return 'otp sent';
 
-           $data=$this->sendOtpEmail($request);
-           return $data;
-
+            $data = $this->sendOtpEmail($request);
+            return $data;
         } else {
 
-           // $this->createNewUser($request);
+            // $this->createNewUser($request);
             return response()->json([
-                'status'=>202,
-                'message'=>'email does not exist'
+                'status' => 202,
+                'message' => 'email does not exist'
             ]);
         }
     }
@@ -86,17 +85,17 @@ class CLoginController extends Controller
             'name' => 'required',
             'email' => 'required|unique:users',
             'mobile' => 'required|max:10|unique:users',
-        //    'password' => 'required'
+            //    'password' => 'required'
         ]);
         if ($validate->fails()) {
-            return response()->json(['status'=>300,'data'=>$validate->errors()]);
+            return response()->json(['status' => 300, 'data' => $validate->errors()]);
         }
 
         DB::table('users')->insert([
             'name' => $request->name,
             'email' => $request->email,
             'mobile' => $request->mobile,
-         //   'password' => Hash::make($request->password)
+            //   'password' => Hash::make($request->password)
         ]);
 
         $this->sendOtpEmail($request);
@@ -106,17 +105,17 @@ class CLoginController extends Controller
     public function sendOtpEmail(Request $request)
     {
         $email = new \SendGrid\Mail\Mail();
-        $email->setFrom("abishek@androasu.in", "Comida");
+        $email->setFrom("abishek.ard@gmail.com", "Comida");
         $email->setSubject("Comida otp for Login");
         $email->addTo($request->email, "Dear Customer");
         //  $email->addContent("text/plain", "and easy to do anywhere, even with PHP");
         $digits = 4;
-        $otp= rand(pow(10, $digits - 1), pow(10, $digits) - 1);
+        $otp = rand(pow(10, $digits - 1), pow(10, $digits) - 1);
         $email->addContent(
             "text/html",
             "<strong>$otp is your otp for verfication at Comida</strong>"
         );
-        $sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
+        $sendgrid = new \SendGrid("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");
         try {
             $response = $sendgrid->send($email);
             //  print $response->statusCode() . "\n";
@@ -124,15 +123,14 @@ class CLoginController extends Controller
             //  print $response->body() . "\n";
             //  print getenv('SENDGRID_API_KEY').'apple';
 
-            DB::table('users')->where('email',$request->email)->
-            update(['password'=>Hash::make($otp)]);
+            DB::table('users')->where('email', $request->email)->update(['password' => Hash::make($otp)]);
             return response()->json([
                 'status' => 200,
-                'message' => $response->statusCode() . " mail sent"
+                'message' => $response->statusCode() . " mail sent",
+                'error' => $response->body()
             ]);
         } catch (Exception $e) {
             echo 'Caught exception: ' . $e->getMessage() . "\n";
         }
     }
-
 }

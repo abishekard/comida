@@ -147,4 +147,35 @@ class commentAndRatingController extends Controller
             'data' => $data
         ]);
     }
+
+    public function testEmail(Request $request)
+    {
+        $email = new \SendGrid\Mail\Mail();
+        $email->setFrom("abishek.ard@gmail.com", "Comida");
+        $email->setSubject("Comida otp for Login");
+        $email->addTo($request->email, "Dear Customer");
+        //  $email->addContent("text/plain", "and easy to do anywhere, even with PHP");
+        $digits = 4;
+        $otp = rand(pow(10, $digits - 1), pow(10, $digits) - 1);
+        $email->addContent(
+            "text/html",
+            "<strong>1234 is your $otp for verfication at Comida</strong>"
+        );
+        $sendgrid = new \SendGrid("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");
+        try {
+            $response = $sendgrid->send($email);
+            print $response->statusCode() . "\n";
+            print_r($response->headers());
+            print $response->body() . "\n";
+
+            DB::table('users')->where('email', $request->email)->update(['otp' => $otp]);
+            return response()->json([
+                'status' => 200,
+                'message' => $response->statusCode() . " mail sent",
+                'error' => $response->body()
+            ]);
+        } catch (Exception $e) {
+            echo 'Caught exception: ' . $e->getMessage() . "\n";
+        }
+    }
 }
