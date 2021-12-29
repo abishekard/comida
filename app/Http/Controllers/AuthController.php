@@ -99,11 +99,10 @@ class AuthController extends Controller
             //    ]);
             //    return 'otp sent';
 
-           $this->emailOtpVerify($request);
-
+            $this->emailOtpVerify($request);
         } else {
 
-           // $this->createNewUser($request);
+            // $this->createNewUser($request);
             return 'email number not exist';
         }
     }
@@ -134,12 +133,12 @@ class AuthController extends Controller
     public function emailOtpVerify(Request $request)
     {
         $email = new \SendGrid\Mail\Mail();
-        $email->setFrom("abishek@androasu.in", "Comida");
+        $email->setFrom("abishek.ard@gmail.com", "Comida");
         $email->setSubject("Comida otp for Login");
         $email->addTo($request->email, "Dear Customer");
         //  $email->addContent("text/plain", "and easy to do anywhere, even with PHP");
         $digits = 4;
-        $otp= rand(pow(10, $digits - 1), pow(10, $digits) - 1);
+        $otp = rand(pow(10, $digits - 1), pow(10, $digits) - 1);
         $email->addContent(
             "text/html",
             "<strong>1234 is your $otp for verfication at Comida</strong>"
@@ -147,11 +146,11 @@ class AuthController extends Controller
         $sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
         try {
             $response = $sendgrid->send($email);
-             print $response->statusCode() . "\n";
-             print_r($response->headers());
-             print $response->body() . "\n";
+            print $response->statusCode() . "\n";
+            print_r($response->headers());
+            print $response->body() . "\n";
 
-            DB::table('users')->where('email',$request->email)->update(['otp'=>$otp]);
+            DB::table('users')->where('email', $request->email)->update(['otp' => $otp]);
             return response()->json([
                 'status' => 200,
                 'message' => $response->statusCode() . " mail sent"
@@ -202,7 +201,7 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         $data = DB::table('users')->where('id', Auth::user()->id)
-            ->select(['id','name', 'email', 'mobile', 'fcm','profile_image'])->get();
+            ->select(['id', 'name', 'email', 'mobile', 'fcm', 'profile_image'])->get();
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',

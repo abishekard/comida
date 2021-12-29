@@ -189,7 +189,7 @@ class PlaceOrderController extends Controller
             'shop_image' => $partnerData[0]->shop_image,
             'speciality' => $partnerData[0]->speciality,
             'shop_address' => $partnerData[0]->address,
-            'comment'=>$mainData[0]->comment,
+            'comment' => $mainData[0]->comment,
             'orders' => $data
         ]);
     }
