@@ -199,7 +199,7 @@ class PlaceOrderController extends Controller
     {
 
 
-        $SERVER_API_KEY = getenv('FCM_API_KEY');
+        $SERVER_API_KEY = 'AAAApuyCRGc:APA91bG-LcvN10PhgxV2CueE5BeI13x44IJBM_tLfGmuDlER3JV7H-gutccVv8Rh6NNJ2MD7plMlWbSmv-Ebs0rhssbqmyFH2DH94Cj-0UBFy-o90YejKubFc6SPlASXpIYjY0BilOzV';
 
         $data = [
             "registration_ids" => $fcmToken,

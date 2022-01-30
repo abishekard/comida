@@ -75,12 +75,12 @@ class DOrderController extends Controller
             ->get();
         $lat_lng = explode(' ', $orderData[0]->lat_lng);
         //  return response()->json(['lat'=>$lat_lng[0],'lng'=>$lat_lng[1]]);
-        $customerData= DB::table('users')->where('id',$orderData[0]->user_id)->first();
+        $customerData = DB::table('users')->where('id', $orderData[0]->user_id)->first();
         return response()->json([
             'status' => 200,
             'customer_id' => $orderData[0]->user_id,
-            'customer_name'=>$customerData->name,
-            'customer_mobile'=>$customerData->mobile,
+            'customer_name' => $customerData->name,
+            'customer_mobile' => $customerData->mobile,
             'delivery_address' => $orderData[0]->delivered_address,
             'created_at' => $orderData[0]->created_at,
             'latitude' => $lat_lng[0],
@@ -128,24 +128,24 @@ class DOrderController extends Controller
             ->select('user_id')->first()->user_id;
         $partnerAmount = DB::table('partner')->where('id', $partnerId)
             ->select('account_balance')->first()->account_balance;
-         if($payMethod=='online')
-        DB::table('partner')->where('id', $partnerId)->update([
-            'account_balance' => $partnerAmount + $total
-        ]);
+        if ($payMethod == 'online')
+            DB::table('partner')->where('id', $partnerId)->update([
+                'account_balance' => $partnerAmount + $total
+            ]);
 
         // send notification to partner
         $pFcmToken = DB::table('partner')->where('id', $partnerId)->select('fcm')->first()->fcm;
         $pName = DB::table('partner')->where('id', $partnerId)->select('shop_name')->first()->shop_name;
         $pTitle = 'Order Delivered';
         $pBody = 'Dear ' . $pName . ' you order with order-id #' . $request->order_id . ' is successfully delivered.';
-        $this->sendNotification($pTitle,$pBody,[$pFcmToken]);
+        $this->sendNotification($pTitle, $pBody, [$pFcmToken]);
 
         // send notification to customer
         $cFcmToken = DB::table('users')->where('id', $userId)->select('fcm')->first()->fcm;
         $cName = DB::table('users')->where('id', $userId)->select('name')->first()->name;
         $cTitle = 'Order Delivered';
         $cBody = 'Dear ' . $cName . ' you order with order-id #' . $request->order_id . ' is successfully delivered.';
-        $this->sendNotification($cTitle,$cBody,[$cFcmToken]);
+        $this->sendNotification($cTitle, $cBody, [$cFcmToken]);
 
 
 
@@ -162,7 +162,7 @@ class DOrderController extends Controller
     {
 
 
-        $SERVER_API_KEY = getenv('FCM_API_KEY');
+        $SERVER_API_KEY = 'AAAApuyCRGc:APA91bG-LcvN10PhgxV2CueE5BeI13x44IJBM_tLfGmuDlER3JV7H-gutccVv8Rh6NNJ2MD7plMlWbSmv-Ebs0rhssbqmyFH2DH94Cj-0UBFy-o90YejKubFc6SPlASXpIYjY0BilOzV';
 
         $data = [
             "registration_ids" => $fcmToken,

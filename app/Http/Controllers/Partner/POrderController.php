@@ -99,7 +99,7 @@ class POrderController extends Controller
 
         $validate = Validator::make($request->all(), [
             'order_id' => 'required',
-            'delivery_partner_id'=>'required'
+            'delivery_partner_id' => 'required'
         ]);
         if ($validate->fails()) {
             return response()->json([
@@ -109,7 +109,7 @@ class POrderController extends Controller
         }
         DB::table('customer_order_table')->where('order_id', $request->order_id)->update([
             'status' => 3,
-            'delivery_partner_id'=>$request->delivery_partner_id
+            'delivery_partner_id' => $request->delivery_partner_id
         ]);
         $userId = DB::table('customer_order_table')->where('order_id', $request->order_id)
             ->select('user_id')->first();
@@ -122,12 +122,12 @@ class POrderController extends Controller
 
         $this->sendOrderNotification($title, $body, [$fcmToken]);
 
-        $delData=DB::table('delivery_partner')->where('id',$request->delivery_partner_id)->select('fcm', 'name')->first();
-        $delName=$delData->name;
-        $delFcmToken=[$delData->fcm];
-        $delTitle="New Delivery Assigned";
-        $delBody="Dear ".$delName." you are assigned new delivery with order-id #".$request->order_id;
-        $this->sendOrderNotification($delTitle,$delBody,$delFcmToken);
+        $delData = DB::table('delivery_partner')->where('id', $request->delivery_partner_id)->select('fcm', 'name')->first();
+        $delName = $delData->name;
+        $delFcmToken = [$delData->fcm];
+        $delTitle = "New Delivery Assigned";
+        $delBody = "Dear " . $delName . " you are assigned new delivery with order-id #" . $request->order_id;
+        $this->sendOrderNotification($delTitle, $delBody, $delFcmToken);
 
         return response()->json([
             'status' => 200,
@@ -154,10 +154,10 @@ class POrderController extends Controller
             ->select('total_price')->first()->total_price;
         $partnerId =    DB::table('customer_order_table')->where('order_id', $request->order_id)
             ->select('partner_id')->first()->partner_id;
-        $partnerAmount = DB::table('partner')->where('id',$partnerId)
+        $partnerAmount = DB::table('partner')->where('id', $partnerId)
             ->select('account_balance')->first()->account_balance;
-        DB::table('partner')->where('id',$partnerId)->update([
-            'account_balance'=>number_format($partnerAmount)+number_format($total)
+        DB::table('partner')->where('id', $partnerId)->update([
+            'account_balance' => number_format($partnerAmount) + number_format($total)
         ]);
         return response()->json([
             'status' => 200,
@@ -170,7 +170,7 @@ class POrderController extends Controller
     {
 
 
-        $SERVER_API_KEY = getenv('FCM_API_KEY');
+        $SERVER_API_KEY = 'AAAApuyCRGc:APA91bG-LcvN10PhgxV2CueE5BeI13x44IJBM_tLfGmuDlER3JV7H-gutccVv8Rh6NNJ2MD7plMlWbSmv-Ebs0rhssbqmyFH2DH94Cj-0UBFy-o90YejKubFc6SPlASXpIYjY0BilOzV';
 
         $data = [
             "registration_ids" => $fcmToken,
